@@ -6,7 +6,7 @@ ifdef LDFLAGS
 else
 	FLAGS		:=	-lreadline -Llibft -lft
 endif
-CFLAGS		:=	-Wall -Wextra -Werror
+#CFLAGS		:=	-Wall -Wextra -Werror
 #FLAGS		+=	-g -fsanitize=address
 
 DIR_SRCS	:=	srcs
