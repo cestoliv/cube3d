@@ -1,11 +1,14 @@
-NO ./tests/maps/images/NO.xpm
-SO ./tests/maps/images/SO.xpm
-WE ./tests/maps/images/WE.xpm
+F                                              42,+255,0
+NO             ./tests/maps/images/NO.xpm
+WE ./tests/maps/images/WE space.xpm                     
 EA ./tests/maps/images/EA.xpm
 
-F 00,153,15
-C 255,255,255
+C 66,206,66
 
+
+
+
+SO ./tests/maps/images/SO.xpm
         1111111111111111111111111
         1000000000000000000000001
         1000000000000001111111111

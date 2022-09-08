@@ -1,4 +1,4 @@
-NO ./tests/maps/images/NO.xpm
+NO ./tests/maps/images/empty.xpm
 SO ./tests/maps/images/SO.xpm
 WE ./tests/maps/images/WE.xpm
 EA ./tests/maps/images/EA.xpm
