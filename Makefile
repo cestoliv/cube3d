@@ -2,18 +2,19 @@ NAME		:=	cube3d
 
 CC			:=	clang
 ifdef LDFLAGS
-	FLAGS		:=	$(LDFLAGS) -lreadline -Llibft -lft
+	FLAGS		:=	$(LDFLAGS) -Llibft -lft
 else
-	FLAGS		:=	-lreadline -Llibft -lft
+	FLAGS		:= -Llibft -lft
 endif
 #CFLAGS		:=	-Wall -Wextra -Werror
-#FLAGS		+=	-g -fsanitize=address
+FLAGS		+=	-g
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
-LST_SRCS	:=	parsing.c
+LST_SRCS	:=	parsing.c \
+				main.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	parsing.h
 
@@ -27,8 +28,9 @@ YELLOW		:=	\033[33m
 GREEN		:=	\033[32m
 END			:=	\033[0m
 
-$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
-	mkdir -p $(DIR_OBJS) $(DIR_OBJS)/parsing $(DIR_OBJS)/exec
+# .o generation
+$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(DIR_SRCS)/main.c $(INCS) Makefile libft/libft.a
+	mkdir -p $(DIR_OBJS)
 ifdef CPPFLAGS
 	$(CC) -I $(DIR_INCS) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 else
@@ -42,22 +44,26 @@ $(NAME):	$(OBJS)
 	$(CC) $(OBJS) $(FLAGS) $(CFLAGS) -o $@
 	printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
+test:	all
+	printf "$(ERASE)$(GREEN)Starting tests\n$(END)"
+	./tests/parsing_test.sh
+
 libft:
 	make -C libft
 
 clean:
-	printf "$(YELLOW)$(DIR_OBJS) removed$(END)\n"
 	rm -rdf $(DIR_OBJS)
+	printf "$(YELLOW)$(DIR_OBJS) removed$(END)\n"
 	printf "libft : "
 	make clean -C libft
 
 fclean:		clean
+	rm -rf $(NAME)
 	printf "$(YELLOW)$(NAME) removed$(END)\n"
-	rm -rf $(NAME) checker
 	printf "libft : "
 	make fclean -C libft
 
 re:			fclean all
 
-.PHONY:		all libft clean fclean re
+.PHONY:		all libft clean fclean re test
 .SILENT:

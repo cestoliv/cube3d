@@ -2,26 +2,18 @@
 #include <fcntl.h>
 #include "../libft/include/get_next_line.h"
 
-typedef struct s_parsed
+#include "parsing.h"
+
+void	init_parsed_struct(t_parsed **result)
 {
-	char	*north_texture;
-	char	*south_texture;
-	char	*east_texture;
-	char	*west_texture;
+	*result = malloc(sizeof(t_parsed));
+	(*result)->north_texture = NULL;
+	(*result)->south_texture = NULL;
+	(*result)->east_texture = NULL;
+	(*result)->west_texture = NULL;
 
-	char	*floor_color;
-	char	*ceil_color;
-}	t_parsed;
-
-void	init_parsed_struct(t_parsed *result)
-{
-	result->north_texture = NULL;
-	result->south_texture = NULL;
-	result->east_texture = NULL;
-	result->west_texture = NULL;
-
-	result->floor_color = NULL;
-	result->ceil_color = NULL;
+	(*result)->floor_color = NULL;
+	(*result)->ceil_color = NULL;
 }
 
 int	pass_spaces(char *line, size_t cur)
@@ -112,20 +104,26 @@ int	check_map_line_char(char *line)
 
 void	*free_parsed(t_parsed *map)
 {
-	// free(map->north_texture);
-	// free(map->south_texture);
-	// free(map->east_texture);
-	// free(map->west_texture);
-	// free(map->floor_color);
-	// free(map->ceil_color);
+	free(map->north_texture);
+	free(map->south_texture);
+	free(map->east_texture);
+	free(map->west_texture);
+	free(map->floor_color);
+	free(map->ceil_color);
 	return (NULL);
+}
+
+void	*free_parsed_error(t_parsed *map, char *error)
+{
+	ft_printf("%s\n", error);
+	return (free_parsed(map));
 }
 
 t_parsed	*parse(char *file_path)
 {
 	t_parsed	*result;
 
-	init_parsed_struct(result);
+	init_parsed_struct(&result);
 	int	map_fd = open(file_path, O_RDONLY);
 
 	char *map_line = ft_strdup("");
@@ -148,16 +146,18 @@ t_parsed	*parse(char *file_path)
 			else if (!ft_strncmp("C", line, 1))
 				result->ceil_color = get_line_value("C", line);
 			else if (!is_line_empty(line))
+			{
 				has_map_started = 1;
+			}
 		}
 		if (has_map_started)
 		{
 			if (!has_every_data(result))
-				return (free_parsed(result));
+				return (free_parsed_error(result, "Error. (The map does not contain all the texture information.)"));
 			if (!check_map_line_char(line))
-				return (free_parsed(result));
+				return (free_parsed_error(result, "Error. (The map content contains invalid characters.)"));
 			else if (is_line_empty(line))
-				return (free_parsed(result));
+				return (free_parsed_error(result, "Error. (The map content contains empty lines.)"));
 			else
 			{
 				map_line = ft_strjoin(map_line, line);
@@ -167,25 +167,16 @@ t_parsed	*parse(char *file_path)
 		line = get_next_line(map_fd, GNL_KEEP);
 	}
 
-	printf("Map line:\n%s\n", map_line);
+	if (!has_every_data(result))
+		return (free_parsed(result));
+
+	// ft_printf("North: |%s|\n", result->north_texture);
+	// ft_printf("South: |%s|\n", result->south_texture);
+	// ft_printf("East: |%s|\n", result->east_texture);
+	// ft_printf("West: |%s|\n", result->west_texture);
+	// ft_printf("Floor: |%s|\n", result->floor_color);
+	// ft_printf("Ceil: |%s|\n", result->ceil_color);
+
+	//printf("Map line:\n%s\n", map_line);
 	return (result);
-}
-
-int	main(int argc, char **argv)
-{
-	(void) argc;
-	(void) argv;
-
-	t_parsed *map = parse("maps/m1.cub");
-	// if (map == NULL)
-	// {
-	// 	printf("KO\n");
-	// 	return (1);
-	// }
-	printf("North: |%s|\n", map->north_texture);
-	printf("South: |%s|\n", map->south_texture);
-	printf("East: |%s|\n", map->east_texture);
-	printf("West: |%s|\n", map->west_texture);
-	printf("Floor: |%s|\n", map->floor_color);
-	printf("Ceil: |%s|\n", map->ceil_color);
 }
