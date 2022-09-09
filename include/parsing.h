@@ -18,6 +18,13 @@ typedef struct s_parsed
 	char	**map;
 }	t_parsed;
 
+typedef struct s_player
+{
+	int		x;
+	int		y;
+	char	dir;
+}	t_player;
+
 t_parsed	*parse(char *file_path);
 void		*free_parsed(t_parsed *map);
 

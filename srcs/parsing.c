@@ -55,9 +55,6 @@ int	line_value_size(char *line, size_t cur)
 	size_t	size;
 
 	size = 0;
-	// Pour s'arrêter au prenier espace dans la valeur
-	// while (line[cur + size] != ' ' && line[cur + size] != '\n')
-	// 	size++;
 	while (line[cur + size] != '\n')
 	{
 		size++;
@@ -99,12 +96,12 @@ char	*extract_texture(char *line, t_parsed *map)
 	if (texture)
 	{
 		if (*texture != NULL)
-			return (print_error("Error. (You can't set a texture more than once)\n"));
+			return (print_error("Error\n(You can't set a texture more than once)\n"));
 		*texture = get_line_value(2, line);
 
 		fd = open(*texture, O_RDONLY);
 		if (fd < 0)
-			return (print_error("Error. (Unable to open texture file)\n"));
+			return (print_error("Error\n(Unable to open texture file)\n"));
 	}
 		
 	return (*texture);
@@ -180,13 +177,13 @@ char	*extract_color(char *line, t_parsed *map)
 	if (color)
 	{
 		if (*color != NULL)
-			return (print_error("Error. (You can't set a color more than once)\n"));
+			return (print_error("Error\n(You can't set a color more than once)\n"));
 		*color = ft_strdup("#");
 		char *rgb_color = get_line_value(2, line);
 		if (!check_rgb_string_format(rgb_color))
 		{
 			free(rgb_color);
-			return (print_error("Error. (Invalid RGB color format)\n"));
+			return (print_error("Error\n(Invalid RGB color format)\n"));
 		}
 		char **rgb = ft_split(rgb_color, ',');
 		int rgb_cur = 0;
@@ -199,7 +196,7 @@ char	*extract_color(char *line, t_parsed *map)
 				free(rgb[1]);
 				free(rgb[2]);
 				free(rgb);
-				return (print_error("Error. (Color value must be between 0 and 255)\n"));
+				return (print_error("Error\n(Color value must be between 0 and 255)\n"));
 			}
 			char	*color_hex = decimal_to_hexadecimal(ft_atoi(rgb[rgb_cur]));
 			*color = ft_strappend(color, color_hex);
@@ -417,6 +414,64 @@ char	**parse_map_line(char *map_line)
 	return (map);
 }
 
+t_player	get_player(char **map)
+{
+	size_t	x_cur;
+	size_t	y_cur;
+
+	y_cur = 0;
+	while (map[y_cur])
+	{
+		x_cur = 0;
+		while (map[y_cur][x_cur])
+		{
+			if (map[y_cur][x_cur] == 'N' || map[y_cur][x_cur] == 'S' ||
+				map[y_cur][x_cur] == 'E' || map[y_cur][x_cur] == 'W')
+				return ((t_player){x_cur, y_cur, map[y_cur][x_cur]});
+			x_cur++;
+		}
+		y_cur++;
+	}
+	return ((t_player){-1, -1});
+}
+
+int	count_players(char **map)
+{
+	size_t	x_cur;
+	size_t	y_cur;
+	int		count;
+
+	y_cur = 0;
+	count = 0;
+	while (map[y_cur])
+	{
+		x_cur = 0;
+		while (map[y_cur][x_cur])
+		{
+			if (map[y_cur][x_cur] == 'N' || map[y_cur][x_cur] == 'S' ||
+				map[y_cur][x_cur] == 'E' || map[y_cur][x_cur] == 'W')
+				count++;
+			x_cur++;
+		}
+		y_cur++;
+	}
+	return (count);
+}
+
+int	check_map(char **map)
+{
+	t_player	player;
+
+	if (count_players(map) != 1)
+	{
+		ft_printf("Error\n(Map contains multiple positions for the player)\n");
+		return (0);
+	}
+		
+	// ft_printf("player: %d, %d, dir: %c\n", get_player(map).x, get_player(map).y, get_player(map).dir);
+	return (1);
+}
+
 t_parsed	*parse(char *file_path)
 {
 	t_parsed	*result;
@@ -425,7 +480,7 @@ t_parsed	*parse(char *file_path)
 	int	map_fd = open(file_path, O_RDONLY);
 	if (map_fd < 0)
 	{
-		ft_printf("Error. (Unable to open the map file)");
+		ft_printf("Error\n(Unable to open the map file)\n");
 		return (free_parsed(result));
 	}
 
@@ -455,13 +510,13 @@ t_parsed	*parse(char *file_path)
 		if (has_map_started)
 		{
 			if (!has_every_data(result))
-				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error. (The map does not contain all the textures and colors information)\n"));
+				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error\n(The map does not contain all the textures and colors information)\n"));
 			if (!check_map_line_char(line))
-				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error. (The map content contains invalid characters)\n"));
+				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error\n(The map content contains invalid characters)\n"));
 			else if (is_line_empty(line))
-				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error. (The map content contains empty lines)\n"));
+				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error\n(The map content contains empty lines)\n"));
 			else if (is_line_only(line, ' '))
-				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error. (The map content contains lines with only spaces)\n"));
+				return (free_parsing_elems(result, &map_line, &line, map_fd, "Error\n(The map content contains lines with only spaces)\n"));
 			else
 				map_line = ft_strappend(&map_line, line);
 		}
@@ -476,19 +531,22 @@ t_parsed	*parse(char *file_path)
 	result->map = parse_map_line(map_line);
 	free(map_line);
 
-	ft_printf("North: |%s|\n", result->north_texture);
-	ft_printf("South: |%s|\n", result->south_texture);
-	ft_printf("East: |%s|\n", result->east_texture);
-	ft_printf("West: |%s|\n", result->west_texture);
-	ft_printf("Floor: |%s|\n", result->floor_color);
-	ft_printf("Ceil: |%s|\n", result->ceil_color);
+	if (!check_map(result->map))
+		return (free_parsed(result));
 
-	int	x = 0;
-	while (result->map[x])
-	{
-		ft_printf("|%s|\n", result->map[x]);
-		x++;
-	}
+	// ft_printf("North: |%s|\n", result->north_texture);
+	// ft_printf("South: |%s|\n", result->south_texture);
+	// ft_printf("East: |%s|\n", result->east_texture);
+	// ft_printf("West: |%s|\n", result->west_texture);
+	// ft_printf("Floor: |%s|\n", result->floor_color);
+	// ft_printf("Ceil: |%s|\n", result->ceil_color);
+
+	// int	x = 0;
+	// while (result->map[x])
+	// {
+	// 	ft_printf("|%s|\n", result->map[x]);
+	// 	x++;
+	// }
 
 	return (result);
 }
