@@ -14,8 +14,11 @@ typedef struct s_parsed
 
 	char	*floor_color;
 	char	*ceil_color;
+
+	char	**map;
 }	t_parsed;
 
 t_parsed	*parse(char *file_path);
+void		*free_parsed(t_parsed *map);
 
 #endif

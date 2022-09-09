@@ -52,7 +52,7 @@ libft:
 	make -C libft
 
 clean:
-	rm -rdf $(DIR_OBJS)
+	rm -rf $(DIR_OBJS)
 	printf "$(YELLOW)$(DIR_OBJS) removed$(END)\n"
 	printf "libft : "
 	make clean -C libft

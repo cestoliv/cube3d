@@ -93,7 +93,7 @@ clean:
 	printf "$(YELLOW)$(DIR_OBJS) removed$(END)\n"
 
 fclean:		clean
-	rm -rdf	$(NAME)
+	rm -rf	$(NAME)
 	printf "$(YELLOW)$(NAME) removed$(END)\n"
 
 re:			fclean all
