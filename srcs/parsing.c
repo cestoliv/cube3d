@@ -477,6 +477,8 @@ int	count_players(char **map)
 
 int	can_exit_map_from_pos(t_parsed *map, size_t x, size_t y)
 {
+	int	correct_sides;
+	
 	if (map->map[y][x] == '.' || map->map[y][x] == '1')
 		return (0);
 	else if (map->map[y][x] == '0')
@@ -484,17 +486,27 @@ int	can_exit_map_from_pos(t_parsed *map, size_t x, size_t y)
 	else if (map->map[y][x] == ' ')
 		return (1);
 
-	int	correct_sides;
-
 	correct_sides = 4;
 	// left
-	correct_sides -= can_exit_map_from_pos(map, x - 1, y);
+	if (x - 1 >= map->map_width)
+		correct_sides--;
+	else if (can_exit_map_from_pos(map, x - 1, y))
+		correct_sides--;
 	// right
-	correct_sides -= can_exit_map_from_pos(map, x + 1, y);
+	if (x + 1 >= map->map_width)
+		correct_sides--;
+	else
+		correct_sides -= can_exit_map_from_pos(map, x + 1, y);
 	// up
-	correct_sides -= can_exit_map_from_pos(map, x, y - 1);
+	if (y - 1 >= map->map_height)
+		correct_sides--;
+	else
+		correct_sides -= can_exit_map_from_pos(map, x, y - 1);
 	// down
-	correct_sides -= can_exit_map_from_pos(map, x, y + 1);
+	if (y + 1 >= map->map_height)
+		correct_sides--;
+	else
+		correct_sides -= can_exit_map_from_pos(map, x, y + 1);
 	return (correct_sides != 4);
 }
 
