@@ -16,6 +16,8 @@ typedef struct s_parsed
 	char	*ceil_color;
 
 	char	**map;
+	size_t	map_height;
+	size_t	map_width;
 }	t_parsed;
 
 typedef struct s_player

@@ -414,6 +414,23 @@ char	**parse_map_line(char *map_line)
 	return (map);
 }
 
+size_t	get_map_height(char **map)
+{
+	size_t	cur;
+
+	cur = 0;
+	while (map[cur])
+		cur++;
+	return (cur);
+}
+
+size_t	get_map_width(char **map)
+{
+	if (map[0])
+		return (ft_strlen(map[0]));
+	return (0);
+}
+
 t_player	get_player(char **map)
 {
 	size_t	x_cur;
@@ -458,17 +475,45 @@ int	count_players(char **map)
 	return (count);
 }
 
-int	check_map(char **map)
+int	can_exit_map_from_pos(t_parsed *map, size_t x, size_t y)
+{
+	if (map->map[y][x] == '.' || map->map[y][x] == '1')
+		return (0);
+	else if (map->map[y][x] == '0')
+		map->map[y][x] = '.';
+	else if (map->map[y][x] == ' ')
+		return (1);
+
+	int	correct_sides;
+
+	correct_sides = 4;
+	// left
+	correct_sides -= can_exit_map_from_pos(map, x - 1, y);
+	// right
+	correct_sides -= can_exit_map_from_pos(map, x + 1, y);
+	// up
+	correct_sides -= can_exit_map_from_pos(map, x, y - 1);
+	// down
+	correct_sides -= can_exit_map_from_pos(map, x, y + 1);
+	return (correct_sides != 4);
+}
+
+int	check_map(t_parsed *map)
 {
 	t_player	player;
 
-	if (count_players(map) != 1)
+	if (count_players(map->map) != 1)
 	{
 		ft_printf("Error\n(Map contains multiple positions for the player)\n");
 		return (0);
 	}
-		
-	// ft_printf("player: %d, %d, dir: %c\n", get_player(map).x, get_player(map).y, get_player(map).dir);
+	
+	player = get_player(map->map);
+	if (can_exit_map_from_pos(map, player.x, player.y))
+	{
+		ft_printf("Error\n(Map is not closed)\n");
+		return (0);
+	}
 	return (1);
 }
 
@@ -529,9 +574,11 @@ t_parsed	*parse(char *file_path)
 		return (free_parsed(result));
 
 	result->map = parse_map_line(map_line);
+	result->map_height = get_map_height(result->map);
+	result->map_width = get_map_width(result->map);
 	free(map_line);
 
-	if (!check_map(result->map))
+	if (!check_map(result))
 		return (free_parsed(result));
 
 	// ft_printf("North: |%s|\n", result->north_texture);
@@ -541,12 +588,12 @@ t_parsed	*parse(char *file_path)
 	// ft_printf("Floor: |%s|\n", result->floor_color);
 	// ft_printf("Ceil: |%s|\n", result->ceil_color);
 
-	// int	x = 0;
-	// while (result->map[x])
-	// {
-	// 	ft_printf("|%s|\n", result->map[x]);
-	// 	x++;
-	// }
+	int	x = 0;
+	while (result->map[x])
+	{
+		ft_printf("|%s|\n", result->map[x]);
+		x++;
+	}
 
 	return (result);
 }
