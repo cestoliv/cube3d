@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:10:19 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/12 10:37:33 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/12 15:02:52 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,41 @@
 # include "../libft/include/get_next_line.h"
 # include "../libft/include/ft_printf.h"
 
-typedef struct s_map2D
-{
-	char	**map;
-	int		width;
-	int		height;
-}	t_map2D;
-
-typedef struct s_parsed
-{
-	char	*north_texture;
-	char	*south_texture;
-	char	*east_texture;
-	char	*west_texture;
-
-	char	*floor_color;
-	char	*ceil_color;
-
-	t_map2D	*map2D;
-}	t_parsed;
-
 typedef struct s_player
 {
 	int		x;
 	int		y;
 	char	dir;
 }	t_player;
+
+typedef struct s_map2D
+{
+	char	**map;
+	size_t	width;
+	size_t	height;
+}	t_map2D;
+
+typedef struct s_map1D
+{
+	int		*map;
+	size_t	width;
+	size_t	height;
+}	t_map1D;
+
+typedef struct s_parsed
+{
+	char		*north_texture;
+	char		*south_texture;
+	char		*east_texture;
+	char		*west_texture;
+
+	char		*floor_color;
+	char		*ceil_color;
+
+	t_player	player;
+	t_map2D		*map2D;
+	t_map1D		*map1D;
+}	t_parsed;
 
 t_parsed	*parse(char *file_path);
 void		print_map(t_parsed *map);
@@ -80,6 +89,7 @@ char		**parse_map_line(char *map_line);
 
 // CHECK MAP
 int			check_map(t_parsed *map);
+int			get_player(char **map, t_player *player);
 size_t		get_map_height(char **map);
 size_t		get_map_width(char **map);
 
