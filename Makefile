@@ -13,8 +13,17 @@ DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
-LST_SRCS	:=	parsing.c \
-				main.c
+LST_SRCS	:=	check_map.c \
+				error.c \
+				extract_utils.c \
+				extract.c \
+				free.c \
+				ft_utils.c \
+				main.c \
+				map2d.c \
+				parse_map.c \
+				parsing.c \
+				rgb.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	parsing.h
 
