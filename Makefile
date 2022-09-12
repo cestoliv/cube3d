@@ -2,9 +2,9 @@ NAME		:=	cube3d
 
 CC			:=	clang
 ifdef LDFLAGS
-	FLAGS		:=	$(LDFLAGS) -Llibft -lft
+	FLAGS		:=	$(LDFLAGS) -Llibft -lft -lm -Llibmlx -lmlx -framework OpenGL -framework AppKit
 else
-	FLAGS		:= -Llibft -lft
+	FLAGS		:= -Llibft -lft -lm -Llibmlx -lmlx -framework OpenGL -framework AppKit
 endif
 #CFLAGS		:=	-Wall -Wextra -Werror
 FLAGS		+=	-g
@@ -13,19 +13,24 @@ DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
-LST_SRCS	:=	check_map.c \
-				error.c \
-				extract_utils.c \
-				extract.c \
-				free.c \
-				ft_utils.c \
-				main.c \
-				map2d.c \
-				parse_map.c \
-				parsing.c \
-				rgb.c
+LST_SRCS	:=	parsing/check_map.c \
+				parsing/error.c \
+				parsing/extract_utils.c \
+				parsing/extract.c \
+				parsing/free.c \
+				parsing/ft_utils.c \
+				parsing/map2d.c \
+				parsing/parse_map.c \
+				parsing/parsing.c \
+				parsing/rgb.c \
+				display/draw.c \
+				display/main.c \
+				display/math.c \
+				display/utils.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
-LST_INCS	:=	parsing.h
+LST_INCS	:=	parsing.h \
+				cub3d.h \
+				proto.h
 
 SRCS		:=	$(addprefix $(DIR_SRCS)/, $(LST_SRCS))
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(LST_OBJS))
@@ -38,8 +43,8 @@ GREEN		:=	\033[32m
 END			:=	\033[0m
 
 # .o generation
-$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(DIR_SRCS)/main.c $(INCS) Makefile libft/libft.a
-	mkdir -p $(DIR_OBJS)
+$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
+	mkdir -p $(DIR_OBJS) $(DIR_OBJS)/parsing $(DIR_OBJS)/display
 ifdef CPPFLAGS
 	$(CC) -I $(DIR_INCS) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 else
@@ -47,7 +52,7 @@ else
 endif
 	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
-all:		libft $(NAME)
+all:		libft libmlx $(NAME)
 
 $(NAME):	$(OBJS)
 	$(CC) $(OBJS) $(FLAGS) $(CFLAGS) -o $@
@@ -59,6 +64,9 @@ test:	all
 
 libft:
 	make -C libft
+
+libmlx:
+	make -C libmlx > /dev/null
 
 clean:
 	rm -rf $(DIR_OBJS)

@@ -18,6 +18,11 @@ void	init_parsed_struct(t_parsed **result)
 	(*result)->map2D->map = NULL;
 	(*result)->map2D->width = 0;
 	(*result)->map2D->height = 0;
+
+	(*result)->map1D = malloc(sizeof(t_map1D));
+	(*result)->map1D->map = NULL;
+	(*result)->map1D->width = 0;
+	(*result)->map1D->height = 0;
 }
 
 int	has_every_data(t_parsed *map)
@@ -55,6 +60,76 @@ int	check_map_line_char(char *line)
 		cur++;
 	}
 	return (1);
+}
+
+void	print_map(t_parsed *map)
+{
+	int	x;
+	int	y;
+	int	cur;
+
+	ft_printf("North: |%s|\n", map->north_texture);
+	ft_printf("South: |%s|\n", map->south_texture);
+	ft_printf("East: |%s|\n", map->east_texture);
+	ft_printf("West: |%s|\n", map->west_texture);
+	ft_printf("Floor: |%s|\n", map->floor_color);
+	ft_printf("Ceil: |%s|\n", map->ceil_color);
+
+	ft_printf("\nPlayer\n");
+	ft_printf("x: %d, y: %d, dir: %c\n", map->player.x, map->player.y, map->player.dir);
+
+	ft_printf("\n2D map\n");
+	x = 0;
+	while (map->map2D->map[x])
+	{
+		ft_printf("|%s|\n", map->map2D->map[x]);
+		x++;
+	}
+
+	ft_printf("\n1D map\n");
+	y = 0;
+	cur = 0;
+	while (y < map->map1D->height)
+	{
+		ft_printf("|");
+		x = 0;
+		while (x < map->map1D->width)
+		{
+			ft_printf("%d", map->map1D->map[cur]);
+			x++;
+			cur++;
+		}
+		ft_printf("|\n");
+		y++;
+	}
+}
+
+void	create_map1D(t_parsed *map)
+{
+	int	x;
+	int	y;
+	int	cur;
+
+	map->map1D->width = map->map2D->width;
+	map->map1D->height = map->map2D->height;
+	map->map1D->map = malloc(sizeof(int) * (map->map1D->width * map->map1D->height));
+
+	y = 0;
+	cur = 0;
+	while (map->map2D->map[y])
+	{
+		x = 0;
+		while (map->map2D->map[y][x])
+		{
+			if (ft_str_contains("0NSEW", map->map2D->map[y][x]))
+				map->map1D->map[cur] = 0;
+			else
+				map->map1D->map[cur] = 1;
+			cur++;
+			x++;
+		}
+		y++;
+	}
 }
 
 t_parsed	*parse(char *file_path)
@@ -111,8 +186,18 @@ t_parsed	*parse(char *file_path)
 	}
 
 	if (!has_every_data(result))
+	{
+		ft_printf("Error\n(The map does not contain all the textures and colors information)\n");
+		free(map_line);
 		return (free_parsed(result));
+	}
 
+	if (ft_strlen(map_line) == 0)
+	{
+		ft_printf("Error\n(The content of the map is empty)\n");
+		free(map_line);
+		return (free_parsed(result));
+	}
 	result->map2D->map = parse_map_line(map_line);
 	result->map2D->height = get_map_height(result->map2D->map);
 	result->map2D->width = get_map_width(result->map2D->map);
@@ -121,19 +206,8 @@ t_parsed	*parse(char *file_path)
 	if (!check_map(result))
 		return (free_parsed(result));
 
-	// ft_printf("North: |%s|\n", result->north_texture);
-	// ft_printf("South: |%s|\n", result->south_texture);
-	// ft_printf("East: |%s|\n", result->east_texture);
-	// ft_printf("West: |%s|\n", result->west_texture);
-	// ft_printf("Floor: |%s|\n", result->floor_color);
-	// ft_printf("Ceil: |%s|\n", result->ceil_color);
-
-	// int	x = 0;
-	// while (result->map2D->map[x])
-	// {
-	// 	ft_printf("|%s|\n", result->map2D->map[x]);
-	// 	x++;
-	// }
+	create_map1D(result);
+	get_player(result->map2D->map, &(result->player));
 
 	return (result);
 }

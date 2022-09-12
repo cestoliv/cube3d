@@ -48,6 +48,9 @@ test_map "RGB color with unauthorized characters" "tests/maps/m13.ko.cub" "Error
 test_map "Map with two ceiling color" "tests/maps/m14.ko.cub" "Error\n(You can't set a color more than once)"
 test_map "Map with multiple player positions" "tests/maps/m15.ko.cub" "Error\n(Map contains multiple positions for the player)"
 test_map "Map not closed" "tests/maps/m16.ko.cub" "Error\n(Map is not closed)"
+test_map "Empty map content" "tests/maps/m17.ko.cub" "Error\n(The content of the map is empty)"
+test_map "Empty map content without every textures/colors" "tests/maps/m18.ko.cub" "Error\n(The map does not contain all the textures and colors information)"
+test_map "Empty file" "tests/maps/m19.ko.cub" "Error\n(The map does not contain all the textures and colors information)"
 
 if [ $HAS_ERROR -eq 0 ]; then
 	echo -e "${GREEN}All tests passed!${END}"
