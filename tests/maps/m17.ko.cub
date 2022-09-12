@@ -1,0 +1,7 @@
+NO ./tests/maps/images/NO.xpm
+SO ./tests/maps/images/SO.xpm
+WE ./tests/maps/images/WE.xpm
+EA ./tests/maps/images/EA.xpm
+
+F 00,153,15
+C 255,255,255

@@ -57,6 +57,23 @@ int	check_map_line_char(char *line)
 	return (1);
 }
 
+void	print_map(t_parsed *map)
+{
+	ft_printf("North: |%s|\n", map->north_texture);
+	ft_printf("South: |%s|\n", map->south_texture);
+	ft_printf("East: |%s|\n", map->east_texture);
+	ft_printf("West: |%s|\n", map->west_texture);
+	ft_printf("Floor: |%s|\n", map->floor_color);
+	ft_printf("Ceil: |%s|\n", map->ceil_color);
+
+	int	x = 0;
+	while (map->map2D->map[x])
+	{
+		ft_printf("|%s|\n", map->map2D->map[x]);
+		x++;
+	}
+}
+
 t_parsed	*parse(char *file_path)
 {
 	t_parsed	*result;
@@ -111,8 +128,18 @@ t_parsed	*parse(char *file_path)
 	}
 
 	if (!has_every_data(result))
+	{
+		ft_printf("Error\n(The map does not contain all the textures and colors information)\n");
+		free(map_line);
 		return (free_parsed(result));
+	}
 
+	if (ft_strlen(map_line) == 0)
+	{
+		ft_printf("Error\n(The content of the map is empty)\n");
+		free(map_line);
+		return (free_parsed(result));
+	}
 	result->map2D->map = parse_map_line(map_line);
 	result->map2D->height = get_map_height(result->map2D->map);
 	result->map2D->width = get_map_width(result->map2D->map);
@@ -120,20 +147,6 @@ t_parsed	*parse(char *file_path)
 
 	if (!check_map(result))
 		return (free_parsed(result));
-
-	// ft_printf("North: |%s|\n", result->north_texture);
-	// ft_printf("South: |%s|\n", result->south_texture);
-	// ft_printf("East: |%s|\n", result->east_texture);
-	// ft_printf("West: |%s|\n", result->west_texture);
-	// ft_printf("Floor: |%s|\n", result->floor_color);
-	// ft_printf("Ceil: |%s|\n", result->ceil_color);
-
-	// int	x = 0;
-	// while (result->map2D->map[x])
-	// {
-	// 	ft_printf("|%s|\n", result->map2D->map[x]);
-	// 	x++;
-	// }
 
 	return (result);
 }

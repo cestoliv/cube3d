@@ -45,6 +45,7 @@ typedef struct s_player
 }	t_player;
 
 t_parsed	*parse(char *file_path);
+void		print_map(t_parsed *map);
 
 // FREE
 void		*free_parsed(t_parsed *map);
