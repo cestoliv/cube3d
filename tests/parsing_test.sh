@@ -47,6 +47,7 @@ test_map "4-values color codes" "tests/maps/m12.ko.cub" "Error\n(Invalid RGB col
 test_map "RGB color with unauthorized characters" "tests/maps/m13.ko.cub" "Error\n(Invalid RGB color format)"
 test_map "Map with two ceiling color" "tests/maps/m14.ko.cub" "Error\n(You can't set a color more than once)"
 test_map "Map with multiple player positions" "tests/maps/m15.ko.cub" "Error\n(Map contains multiple positions for the player)"
+test_map "Map not closed" "tests/maps/m16.ko.cub" "Error\n(Map is not closed)"
 
 if [ $HAS_ERROR -eq 0 ]; then
 	echo -e "${GREEN}All tests passed!${END}"
