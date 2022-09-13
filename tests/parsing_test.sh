@@ -76,6 +76,7 @@ test_map "Map not closed" "tests/maps/m16.ko.cub" "Error\n(Map is not closed)"
 test_map "Empty map content" "tests/maps/m17.ko.cub" "Error\n(The content of the map is empty)"
 test_map "Empty map content without every textures/colors" "tests/maps/m18.ko.cub" "Error\n(The map does not contain all the textures and colors information)"
 test_map "Empty file" "tests/maps/m19.ko.cub" "Error\n(The map does not contain all the textures and colors information)"
+test_map "Map without any player" "tests/maps/m20.ko.cub" "Error\n(Map doesn't contain a position for the player)"
 
 if [ $HAS_ERROR -eq 0 ]; then
 	echo -e "${GREEN}All tests passed!${END}"

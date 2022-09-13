@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:32:07 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/12 10:34:52 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 17:17:08 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,15 @@ int	check_map(t_parsed *map)
 {
 	t_player	player;
 	t_map2D		*map2D_dup;
+	int			players_count;
 
-	if (get_player(map->map2D->map, &player) != 1)
+	players_count = get_player(map->map2D->map, &player);
+	if (players_count != 1)
 	{
-		ft_printf("Error\n(Map contains multiple positions for the player)\n");
+		if (players_count == 0)
+			ft_printf("Error\n(Map doesn't contain a position for the player)\n");
+		else
+			ft_printf("Error\n(Map contains multiple positions for the player)\n");
 		return (0);
 	}
 	
