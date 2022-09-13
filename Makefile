@@ -24,8 +24,11 @@ LST_SRCS	:=	parsing/check_map.c \
 				parsing/parsing.c \
 				parsing/rgb.c \
 				display/draw.c \
+				display/key_loop.c \
 				display/main.c \
 				display/math.c \
+				display/raycastinghv.c \
+				display/raycastingutils.c \
 				display/utils.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	parsing.h \

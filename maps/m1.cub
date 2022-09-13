@@ -1,7 +1,7 @@
-NO ./images/NO.xpm
-SO ./images/SO.xpm
-WE ./images/WE.xpm
-EA ./images/EA.xpm
+NO ./maps/assets/wall_1.xpm
+SO ./maps/assets/wall_2.xpm
+WE ./maps/assets/wall_3.xpm
+EA ./maps/assets/wall_4.xpm
 
 F 00,153,15
 C 255,255,255
