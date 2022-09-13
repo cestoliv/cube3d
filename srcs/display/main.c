@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:14:36 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 15:08:48 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 17:01:12 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	drawrays(t_cub *cub)
 		ft_verti_try_contact(cub);
 		cub->data.shade = 1;
 		ft_shorter(cub);
-		//ft_draw_line(&cub->image[0], cub->pos, cub->data.rayX / 2, \
+		ft_draw_line(&cub->image[0], cub->pos, cub->data.rayX / 2, \
 			cub->data.rayY / 2);
 		cub->data.ratiox = (int)(cub->data.rayX / 2) % 32;
 		ft_final_maths(cub);
@@ -71,21 +71,39 @@ void	init(t_cub *cub) // ajouter en argument structure olivier
 	ft_bzero(cub->clavier, sizeof(char) * 7);
 }
 
+int	parse_only(t_parsed *pars)
+{
+	if (!pars)
+		return (1);
+	ft_printf("MAP OK.\n");
+	free_parsed(pars);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_cub	cub;
+
+	if (argc == 3 && !ft_strncmp("-p", argv[1], 2) && ft_strlen(argv[1]) == 2)
+	{
+		cub.pars = parse(argv[2]);
+		return (parse_only(cub.pars));
+	}
+	else if (argc != 2)
+	{
+		ft_printf("Usage: ./cube3d [-p] <map path>\n");
+		return(1);
+	}
+	
 	cub.pars = parse(argv[1]);
-	if (!cub.pars)
-		return (1);
-	ft_printf("MAP OK.\n");
 	print_map(cub.pars);
 	init(&cub);
 	ft_draw_font(&cub);
-	//dprintf(2, "!!hahaha\n");
 	ft_drawmap(&cub);
 	mlx_hook(cub.mlxwin, 2, 1L << 0, key_hook, &cub);
 	mlx_hook(cub.mlxwin, 3, 2L << 0, key_hook_release, &cub);
 	mlx_loop_hook(cub.mlx, render_next_frame, &cub);
 	mlx_loop(cub.mlx);
+	free_parsed(cub.pars);
 	return (0);
 }

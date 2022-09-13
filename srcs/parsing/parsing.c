@@ -11,8 +11,8 @@ void	init_parsed_struct(t_parsed **result)
 	(*result)->east_texture = NULL;
 	(*result)->west_texture = NULL;
 
-	(*result)->floor_color = NULL;
-	(*result)->ceil_color = NULL;
+	(*result)->floor_color = -1;
+	(*result)->ceil_color = -1;
 
 	(*result)->map2D = malloc(sizeof(t_map2D));
 	(*result)->map2D->map = NULL;
@@ -38,9 +38,9 @@ int	has_every_data(t_parsed *map)
 		count++;
 	if (map->west_texture)
 		count++;
-	if (map->floor_color)
+	if (map->floor_color != -1)
 		count++;
-	if (map->ceil_color)
+	if (map->ceil_color != -1)
 		count++;
 
 	if (count == 6)
@@ -72,8 +72,8 @@ void	print_map(t_parsed *map)
 	ft_printf("South: |%s|\n", map->south_texture);
 	ft_printf("East: |%s|\n", map->east_texture);
 	ft_printf("West: |%s|\n", map->west_texture);
-	ft_printf("Floor: |%s|\n", map->floor_color);
-	ft_printf("Ceil: |%s|\n", map->ceil_color);
+	ft_printf("Floor: |#%x|\n", map->floor_color);
+	ft_printf("Ceil: |#%x|\n", map->ceil_color);
 
 	ft_printf("\nPlayer\n");
 	ft_printf("x: %d, y: %d, dir: %c\n", map->player.x, map->player.y, map->player.dir);

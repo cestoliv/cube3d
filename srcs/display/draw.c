@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 22:12:22 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 14:58:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:08:50 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,9 @@ void	ft_draw_font(t_cub *cub)
 		while (x < 1920)
 		{
 			if (y >= 540)
-				cub->image[2].arr[y][x++] = 0x003300;
+				cub->image[2].arr[y][x++] = cub->pars->floor_color;
 			else
-				cub->image[2].arr[y][x++] = 0x000033;
+				cub->image[2].arr[y][x++] = cub->pars->ceil_color;
 		}
 		++y;
 	}

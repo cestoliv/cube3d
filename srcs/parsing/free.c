@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:08:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/12 14:57:59 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:08:18 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ void	*free_parsed(t_parsed *map)
 		free(map->east_texture);
 	if (map->west_texture)
 		free(map->west_texture);
-	if (map->floor_color)
-		free(map->floor_color);
-	if (map->ceil_color)
-		free(map->ceil_color);
 	free_map2D(map->map2D);
 	if (map->map1D->map)
 		free(map->map1D->map);

@@ -6,12 +6,12 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:10:19 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/12 15:02:52 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:59:56 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_PARSING_H
-# define CUB3D_PARSING_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include "../libft/include/libft.h"
 # include "../libft/include/get_next_line.h"
@@ -45,8 +45,8 @@ typedef struct s_parsed
 	char		*east_texture;
 	char		*west_texture;
 
-	char		*floor_color;
-	char		*ceil_color;
+	int			floor_color;
+	int			ceil_color;
 
 	t_player	player;
 	t_map2D		*map2D;
@@ -72,10 +72,11 @@ int			ft_str_contains(char *str, char c);
 // RGB
 char		*decimal_to_hexadecimal(int decimal);
 int			check_rgb_string_format(char *rgb_string);
+char		*rgb_to_hex(char *rgb);
 
 // EXTRACT
 char		*extract_texture(char *line, t_parsed *map);
-char		*extract_color(char *line, t_parsed *map);
+void		*extract_color(char *line, t_parsed *map);
 char		*get_line_value(int prefix_len, char *line);
 
 // ERROR

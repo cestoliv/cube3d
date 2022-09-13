@@ -3,8 +3,8 @@ SO ./maps/assets/wall_2.xpm
 WE ./maps/assets/wall_3.xpm
 EA ./maps/assets/wall_4.xpm
 
-F 00,153,15
-C 255,255,255
+F 196,98,16
+C 128,212,255
 
         1111111111111111111111111
         1000000000000000000000001

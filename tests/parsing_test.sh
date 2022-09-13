@@ -9,16 +9,41 @@ END="\033[0m"
 
 HAS_ERROR=0
 
+VALGRIND_CMD=1
+if ! command -v valgrind &> /dev/null; then
+	VALGRIND_CMD=0
+	echo -e "${YELLOW}valgrind could not be found${END}"
+fi
+LEAKS_CMD=1
+if ! command -v leaks &> /dev/null; then
+	LEAKS_CMD=0
+	echo -e "${YELLOW}leaks could not be found${END}"
+fi
+if [ $VALGRIND_CMD -eq 0 ] && [ $LEAKS_CMD -eq 0 ]; then
+	echo -e "${YELLOW}no leak tests will be performed${END}"
+fi
+
 test_map () {
 	echo -en "\tTesting map: ${BLUE}$1${END} "
-	OUTPUT_MD5=$(./cube3d $2 | md5sum)
+	OUTPUT_MD5=$(./cube3d -p $2 | md5sum)
 	WANTED_MD5=$(echo -e $3 | md5sum)
 
-	valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=113 ./cube3d $2 >/dev/null 2>&1
-	if [ $? -eq 113 ]; then
-		echo -en "${YELLOW}Leaks${END} "
-		HAS_ERROR=1
+	if [ $VALGRIND_CMD -eq 1 ]; then
+		valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=113 ./cube3d -p $2 >/dev/null 2>&1
+		if [ $? -eq 113 ]; then
+			echo -en "${YELLOW}Leaks${END} "
+			HAS_ERROR=1
+		fi
+	elif [ $LEAKS_CMD -eq 1 ]; then
+		leaks --atExit -- ./cube3d -p $2 >/dev/null 2>&1
+		if [ $? -eq 1 ]; then
+			echo -en "${YELLOW}Leaks${END} "
+			HAS_ERROR=1
+		fi
+	else
+		echo -en "${YELLOW}No leaks check${END} "
 	fi
+
 
 	if [ "$OUTPUT_MD5" != "$WANTED_MD5" ]; then
 		HAS_ERROR=1
