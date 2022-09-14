@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:14:36 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 17:01:12 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:29:10 by Romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	drawrays(t_cub *cub)
 		ft_verti_try_contact(cub);
 		cub->data.shade = 1;
 		ft_shorter(cub);
-		ft_draw_line(&cub->image[0], cub->pos, cub->data.rayX / 2, \
-			cub->data.rayY / 2);
+		ft_draw_line(cub, cub->pos, cub->data.rayX / cub->resizemap, \
+			cub->data.rayY / cub->resizemap);
 		cub->data.ratiox = (int)(cub->data.rayX / 2) % 32;
 		ft_final_maths(cub);
 		ft_drawwalls(cub, cub->data.focal * 4, \
@@ -41,27 +41,41 @@ void	drawrays(t_cub *cub)
 	}
 }
 
+void	playerdir(t_cub *cub)
+{
+	if (cub->pars->player.dir == 'E')
+		cub->pos.pa = 0;
+	if (cub->pars->player.dir == 'W')
+		cub->pos.pa = PI;
+	if (cub->pars->player.dir == 'N')
+		cub->pos.pa = - PI / 2;
+	if (cub->pars->player.dir == 'S')
+		cub->pos.pa = PI / 2;
+}
+
 void	init(t_cub *cub) // ajouter en argument structure olivier
 {
 	// ft_recuperation
 	cub->mlx = mlx_init();
 	cub->mlxwin = mlx_new_window(cub->mlx, 1920, 1080, "Cub3D");
-	cub->pos.x = 950;					// a extraire
-	cub->pos.y = 250;
-	cub->pos.pa = 0;
+	cub->pars->player.y += 1;
+	playerdir(cub);
 	cub->pos.pdx = cos(cub->pos.pa) * 5;
 	cub->pos.pdy = sin(cub->pos.pa) * 5;
 	cub->data.focal = 0;
-	
 	cub->mapW = cub->pars->map1D->width;		
 	cub->mapH = cub->pars->map1D->height;
 	if (cub->mapH > cub->mapW)
 		cub->max = cub->mapH;
 	else
 		cub->max = cub->mapW;
-	//printf("%D et %d/n", cub->mapW, cub->mapH);
+	cub->resizemap = 2;
+	if (cub->max > 25)
+		cub->resizemap += 2;
+	cub->pos.x = 64 * ((double)cub->pars->player.x + 0.5);					// a extraire
+	cub->pos.y = 64 * ((double)cub->pars->player.y - 0.5);
+	
 	cub->mapScale = 64;
-
 	cub->map = cub->pars->map1D->map;
 	cub->image[0].img = mlx_new_image(cub->mlx, 1920, 1080);
 	cub->image[1].img = mlx_new_image(cub->mlx, 1920, 1080);

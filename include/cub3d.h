@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:27:38 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 15:00:43 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:21:09 by Romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct cub
 	int				mapH;
 	int				mapScale;
 	int				max;
+	int				resizemap;
 
 	char			clavier[6];
 

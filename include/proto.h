@@ -6,7 +6,7 @@
 /*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:23:13 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 00:22:27 by Romain           ###   ########.fr       */
+/*   Updated: 2022/09/13 18:20:51 by Romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		reset_raycasting_varsverti(t_cub *cub);
 void		fix_angle(t_cub *cub);
 
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
-void		ft_draw_line(t_image *data, t_pos pos, int endx, int endy);
+void		ft_draw_line(t_cub *cub, t_pos pos, int endx, int endy);
 
 void		ft_putplayer(uint32_t **img_color, t_pos *pos);
 void		ft_drawwalls(t_cub *cub, int beginx, int beginy, int lineH);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_loop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 17:35:03 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 14:58:55 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:28:07 by Romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,6 @@ void	ft_keyvalidation(t_cub *cub)
 		cub->pos.pdx = cos(cub->pos.pa) * 5;
 		cub->pos.pdy = sin(cub->pos.pa) * 5;
 	}
-	if (cub->pos.x > 1920)
-		cub->pos.x = 0;
-	if (cub->pos.x < 0)
-		cub->pos.x = 1920;
-	if (cub->pos.y > 1080)
-		cub->pos.y = 0;
-	if (cub->pos.y < 0)
-		cub->pos.y = 1080;
 }
 
 int	key_hook_release(int keycode, t_cub *cub)
@@ -85,7 +77,6 @@ int	key_hook(int keycode, t_cub *cub)
 {
 	if (keycode == 53)
 	{
-	//	dprintf(2, "amen\n");
 		mlx_destroy_image(cub->mlx, cub->image[0].img);
 		mlx_destroy_image(cub->mlx, cub->image[1].img);
 		mlx_destroy_image(cub->mlx, cub->image[2].img);

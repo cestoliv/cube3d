@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:20:23 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 14:59:06 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:25:58 by Romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	my_mlx_pixel_put(t_image *image, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	ft_draw_line(t_image *data, t_pos pos, int endx, int endy)
+void	ft_draw_line(t_cub *cub, t_pos pos, int endx, int endy)
 {
 	float	deltax;
 	float	deltay;
@@ -29,19 +29,19 @@ void	ft_draw_line(t_image *data, t_pos pos, int endx, int endy)
 	float	pixely;
 	int		pixels;
 
-	pixelx = pos.x / 2;
-	pixely = pos.y / 2;
+	pixelx = pos.x / cub->resizemap;
+	pixely = pos.y / cub->resizemap;
 	deltax = endx - pixelx;
 	deltay = endy - pixely;
 	pixels = sqrt((deltax * deltax)
 			+ (deltay * deltay));
 	deltax /= pixels;
 	deltay /= pixels;
-	pixelx = pos.x / 2;
-	pixely = pos.y / 2;
+	pixelx = pos.x / cub->resizemap;
+	pixely = pos.y / cub->resizemap;
 	while (pixels)
 	{
-		my_mlx_pixel_put(data, pixelx, pixely, 0xff0000);
+		my_mlx_pixel_put(&cub->image[0], pixelx, pixely, 0xff0000);
 		pixelx += deltax;
 		pixely += deltay;
 		--pixels;

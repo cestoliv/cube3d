@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 22:12:22 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 16:08:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:25:06 by Romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,27 @@ void	ft_drawwalls(t_cub *cub, int beginx, int beginy, int lineH)
 	}
 }
 
-void	ft_putplayer(uint32_t **img_color, t_pos *pos)
-{
-	int	x;
-	int	y;
+// void	ft_putplayer(uint32_t **img_color, t_pos *pos)
+// {
+// 	int	x;
+// 	int	y;
 
-	x = 0;
-	y = 0;
-	while (y < 1080)
-	{
-		x = 0;
-		while (x < 1920)
-		{
-			if (y >= pos->y / 2 - 2 && y <= pos->y / 2 + 2 && x \
-					>= pos->x / 2 - 2 && x <= pos->x / 2 + 2)
-				img_color[y][x++] = 0xff0000;
-			else
-				x++;
-		}
-		++y;
-	}
-}
+// 	x = 0;
+// 	y = 0;
+// 	while (y < 1080)
+// 	{
+// 		x = 0;
+// 		while (x < 1920)
+// 		{
+// 			if (y >= pos->y / 2 - 2 && y <= pos->y / 2 + 2 && x \
+// 					>= pos->x / 2 - 2 && x <= pos->x / 2 + 2)
+// 				img_color[y][x++] = 0xff0000;
+// 			else
+// 				x++;
+// 		}
+// 		++y;
+// 	}
+// }
 
 void	ft_drawsquare(uint32_t **img_color, int posx, int posy, int scale)
 {
@@ -98,11 +98,11 @@ void	ft_drawmap(t_cub *cub)
 		x = 0;
 		while (x < cub->mapW)
 		{
-			cub->data.xo = x * cub->mapScale / 2;
-			cub->data.yo = y * cub->mapScale / 2;
+			cub->data.xo = x * cub->mapScale / cub->resizemap;
+			cub->data.yo = y * cub->mapScale / cub->resizemap;
 			if (cub->map[y * cub->mapW + x] == 1)
 				ft_drawsquare(cub->image[1].arr, cub->data.xo, \
-						cub->data.yo, 32);
+						cub->data.yo, 64 / cub->resizemap);
 			x++;
 		}
 		y++;
