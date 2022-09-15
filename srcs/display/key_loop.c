@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 17:35:03 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/15 15:49:37 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 16:11:29 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_keyvalidation(t_cub *cub)
 	}
 	if (cub->clavier[1] == 1)
 	{
-		cub->pos.pa += 0.017;
+		cub->pos.pa += 0.05;
 		if (cub->pos.pa > 2 * PI)
 			cub->pos.pa -= 2 * PI;
 		cub->pos.pdx = cos(cub->pos.pa) * 5;
@@ -52,7 +52,7 @@ void	ft_keyvalidation(t_cub *cub)
 	}
 	if (cub->clavier[3] == 1)
 	{
-		cub->pos.pa -= 0.017;
+		cub->pos.pa -= 0.05;
 		if (cub->pos.pa < 0)
 			cub->pos.pa += 2 * PI;
 		cub->pos.pdx = cos(cub->pos.pa) * 5;
