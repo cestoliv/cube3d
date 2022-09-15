@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:08:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/13 16:08:18 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 16:13:47 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	free_map2D(t_map2D *map2D)
 
 void	*free_parsed(t_parsed *map)
 {
-	size_t	cur;
-
 	if (map->north_texture)
 		free(map->north_texture);
 	if (map->south_texture)

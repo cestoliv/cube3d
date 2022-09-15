@@ -6,7 +6,7 @@ ifdef LDFLAGS
 else
 	FLAGS		:= -Llibft -lft -lm -Llibmlx -lmlx -framework OpenGL -framework AppKit
 endif
-#CFLAGS		:=	-Wall -Wextra -Werror
+CFLAGS		:=	-Wall -Wextra -Werror
 FLAGS		+=	-g
 
 DIR_SRCS	:=	srcs

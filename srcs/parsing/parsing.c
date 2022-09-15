@@ -64,8 +64,8 @@ int	check_map_line_char(char *line)
 
 void	print_map(t_parsed *map)
 {
-	int	x;
-	int	y;
+	size_t	x;
+	size_t	y;
 	int	cur;
 
 	ft_printf("North: |%s|\n", map->north_texture);

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:14:36 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/15 16:04:33 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 16:15:22 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	mouse_motion(int x, int y, t_cub *cub)
 	static int	prev_x = 560;
 	float		rot;
 
+	(void)y;
 	if (!cub->mouse_grabbed)
 		return (0);
 	rot = (prev_x - x) / (float)1000;
@@ -131,6 +132,8 @@ int	mouse_release(int key, int x, int y, void *param)
 {
 	t_cub	*cub;
 
+	(void)x;
+	(void)y;
 	cub = param;
 	if (key == MOUSE_LEFT)
 	{
