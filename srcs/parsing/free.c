@@ -6,21 +6,21 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:08:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 16:13:47 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 18:03:46 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	free_map2D(t_map2D *map2D)
+int	free_map2d(t_map2D *map2d)
 {
 	size_t	cur;
 
 	cur = 0;
-	while (cur < map2D->height)
-		free(map2D->map[cur++]);
-	free(map2D->map);
-	free(map2D);
+	while (cur < map2d->height)
+		free(map2d->map[cur++]);
+	free(map2d->map);
+	free(map2d);
 	return (0);
 }
 
@@ -34,17 +34,16 @@ void	*free_parsed(t_parsed *map)
 		free(map->east_texture);
 	if (map->west_texture)
 		free(map->west_texture);
-	free_map2D(map->map2D);
-	if (map->map1D->map)
-		free(map->map1D->map);
-	free(map->map1D);
+	free_map2d(map->map2d);
+	if (map->map1d->map)
+		free(map->map1d->map);
+	free(map->map1d);
 	free(map);
 	return (NULL);
 }
 
-void	*free_parsing_elems(t_parsed *map, char **str1, char **str2, int fd, char *error)
+void	*free_parsing_el(t_parsed *map, char **str1, char **str2, int fd)
 {
-	ft_printf("%s", error);
 	free(*str1);
 	free(*str2);
 	free(get_next_line(fd, GNL_CLEAR));

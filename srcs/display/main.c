@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:14:36 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/15 16:15:22 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 18:40:37 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	init(t_cub *cub) // ajouter en argument structure olivier
 	cub->pos.pdx = cos(cub->pos.pa) * 5;
 	cub->pos.pdy = sin(cub->pos.pa) * 5;
 	cub->data.focal = 0;
-	cub->mapW = cub->pars->map1D->width;		
-	cub->mapH = cub->pars->map1D->height;
+	cub->mapW = cub->pars->map1d->width;		
+	cub->mapH = cub->pars->map1d->height;
 	if (cub->mapH > cub->mapW)
 		cub->max = cub->mapH;
 	else
@@ -78,7 +78,7 @@ void	init(t_cub *cub) // ajouter en argument structure olivier
 	cub->mouse_grabbed = 0;
 
 	cub->mapScale = 64;
-	cub->map = cub->pars->map1D->map;
+	cub->map = cub->pars->map1d->map;
 	cub->image[0].img = mlx_new_image(cub->mlx, 1920, 1080);
 	cub->image[1].img = mlx_new_image(cub->mlx, 1920, 1080);
 	cub->image[2].img = mlx_new_image(cub->mlx, 1920, 1080);
@@ -187,7 +187,8 @@ int	main(int argc, char **argv)
 	}
 	
 	cub.pars = parse(argv[1]);
-	print_map(cub.pars);
+	if (!cub.pars)
+		return (1);
 	init(&cub);
 	ft_draw_font(&cub);
 	ft_drawmap(&cub);

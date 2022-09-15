@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:30:42 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/12 10:31:21 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:22:14 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,19 @@ char	**parse_map_line(char *map_line)
 {
 	char	**map;
 	size_t	cur;
-	size_t	previous_cur;
+	size_t	p_cur;
 	size_t	y_cur;
 
 	cur = 0;
-	previous_cur = 0;
+	p_cur = 0;
 	y_cur = 0;
 	map = alloc_map(map_line);
 	while (map_line[cur])
 	{
 		if (map_line[cur] == '\n')
 		{
-			ft_strlcpy2(map[y_cur++], map_line + previous_cur, cur - previous_cur + 1);
-			previous_cur = cur + 1;
+			ft_strlcpy2(map[y_cur++], map_line + p_cur, cur - p_cur + 1);
+			p_cur = cur + 1;
 		}
 		cur++;
 	}

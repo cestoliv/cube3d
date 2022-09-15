@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:14:35 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 16:14:13 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:22:51 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ size_t	ft_strlcpy2(char *dst, const char *src, size_t size)
 		dst[cur] = src[cur];
 		cur++;
 	}
-	//dst[cur] = 0;
 	return (ft_strlen(src));
 }
 
 char	*ft_strappend(char **dest, char const *str)
 {
-	char *old_dest;
+	char	*old_dest;
 
 	old_dest = *dest;
 	*dest = ft_strjoin(*dest, str);

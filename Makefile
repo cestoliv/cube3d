@@ -20,6 +20,7 @@ LST_SRCS	:=	parsing/check_map.c \
 				parsing/free.c \
 				parsing/ft_utils.c \
 				parsing/map2d.c \
+				parsing/parse_file.c \
 				parsing/parse_map.c \
 				parsing/parsing.c \
 				parsing/rgb.c \

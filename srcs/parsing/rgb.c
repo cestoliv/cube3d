@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:19:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/13 16:59:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:28:35 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*decimal_to_hexadecimal(int decimal)
 	cur = 1;
 	while (decimal > 0)
 	{
-		hexadecimal[cur--] =  "0123456789ABCDEF"[decimal % 16];
+		hexadecimal[cur--] = "0123456789ABCDEF"[decimal % 16];
 		decimal /= 16;
 	}
 	return (hexadecimal);
@@ -57,6 +57,20 @@ int	check_rgb_string_format(char *rgb_string)
 	return (1);
 }
 
+char	**rgb_string_to_array(char *rgb)
+{
+	char	**rgbs;
+
+	if (!check_rgb_string_format(rgb))
+	{
+		free(rgb);
+		ft_printf("Error\n(Invalid RGB color format)\n");
+		return (NULL);
+	}
+	rgbs = ft_split(rgb, ',');
+	return (rgbs);
+}
+
 char	*rgb_to_hex(char *rgb)
 {
 	char	*color;
@@ -65,21 +79,17 @@ char	*rgb_to_hex(char *rgb)
 	int		cur;
 
 	color = ft_strdup("");
-	if (!check_rgb_string_format(rgb))
-	{
-		free(rgb);
-		free(color);
-		return (print_error("Error\n(Invalid RGB color format)\n"));
-	}
-	rgbs = ft_split(rgb, ',');
+	rgbs = rgb_string_to_array(rgb);
+	if (!rgbs)
+		return (free(color), NULL);
 	cur = 0;
 	while (rgbs[cur])
 	{
 		if (ft_atoi(rgbs[cur]) > 255 || ft_atoi(rgbs[cur]) < 0)
 		{
+			ft_printf("Error\n(Color value must be between 0 and 255)\n");
 			free_rgb(rgb, rgbs);
-			free(color);
-			return (print_error("Error\n(Color value must be between 0 and 255)\n"));
+			return (free(color), NULL);
 		}
 		temp_hex = decimal_to_hexadecimal(ft_atoi(rgbs[cur]));
 		color = ft_strappend(&color, temp_hex);

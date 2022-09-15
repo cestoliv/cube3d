@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:10:19 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/13 16:59:56 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/15 18:40:21 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,16 @@ typedef struct s_parsed
 	int			ceil_color;
 
 	t_player	player;
-	t_map2D		*map2D;
-	t_map1D		*map1D;
+	t_map2D		*map2d;
+	t_map1D		*map1d;
 }	t_parsed;
 
 t_parsed	*parse(char *file_path);
-void		print_map(t_parsed *map);
 
 // FREE
 void		*free_parsed(t_parsed *map);
-int			free_map2D(t_map2D *map2D);
-void		*free_parsing_elems(t_parsed *map, char **str1, char **str2, int fd, char *error);
+int			free_map2d(t_map2D *map2D);
+void		*free_parsing_el(t_parsed *map, char **str1, char **str2, int fd);
 void		free_rgb(char *rgb_line, char **rgb);
 
 // FT_UTILS
@@ -83,15 +82,22 @@ char		*get_line_value(int prefix_len, char *line);
 char		*print_error(char *error);
 
 // MAP 2D
-t_map2D		*dup_map2D(t_map2D *map2D);
+t_map2D		*dup_map2d(t_map2D *map2D);
+int			get_player(char **map, t_player *player);
+size_t		get_map_width(char **map);
+size_t		get_map_height(char **map);
 
 // PARSE MAP
 char		**parse_map_line(char *map_line);
 
+// PARSE FILE
+char		*parse_map_file(char *file_path, t_parsed *parsed);
+int			check_map_line_char(char *line);
+int			has_every_data(t_parsed *map);
+
 // CHECK MAP
 int			check_map(t_parsed *map);
-int			get_player(char **map, t_player *player);
-size_t		get_map_height(char **map);
-size_t		get_map_width(char **map);
+int			count_correct_sides(t_map2D *map2D, size_t x, size_t y);
+int			can_exit_map_from_pos(t_map2D *map2D, size_t x, size_t y);
 
 #endif
