@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:14:36 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 18:29:10 by Romain           ###   ########.fr       */
+/*   Updated: 2022/09/15 16:04:33 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	init(t_cub *cub) // ajouter en argument structure olivier
 	cub->pos.x = 64 * ((double)cub->pars->player.x + 0.5);					// a extraire
 	cub->pos.y = 64 * ((double)cub->pars->player.y - 0.5);
 	
+	cub->mouse_grabbed = 0;
+
 	cub->mapScale = 64;
 	cub->map = cub->pars->map1D->map;
 	cub->image[0].img = mlx_new_image(cub->mlx, 1920, 1080);
@@ -91,6 +93,78 @@ int	parse_only(t_parsed *pars)
 		return (1);
 	ft_printf("MAP OK.\n");
 	free_parsed(pars);
+	return (0);
+}
+
+int	mouse_motion(int x, int y, t_cub *cub)
+{
+	static int	prev_x = 560;
+	float		rot;
+
+	if (!cub->mouse_grabbed)
+		return (0);
+	rot = (prev_x - x) / (float)1000;
+	if (rot < 0)
+		rot *= -1;
+	if (x > 960)
+	{
+		cub->pos.pa += rot;
+		if (cub->pos.pa > 2 * PI)
+			cub->pos.pa -= 2 * PI;
+		cub->pos.pdx = cos(cub->pos.pa) * 5;
+		cub->pos.pdy = sin(cub->pos.pa) * 5;
+	}
+	else if (x < 960)
+	{
+		cub->pos.pa -= rot;
+		if (cub->pos.pa < 0)
+			cub->pos.pa += 2 * PI;
+		cub->pos.pdx = cos(cub->pos.pa) * 5;
+		cub->pos.pdy = sin(cub->pos.pa) * 5;
+	}
+	mlx_mouse_move(cub->mlxwin, 960, 540);
+	prev_x = x;
+	return (0);
+}
+
+int	mouse_release(int key, int x, int y, void *param)
+{
+	t_cub	*cub;
+
+	cub = param;
+	if (key == MOUSE_LEFT)
+	{
+		if (cub->mouse_grabbed)
+		{
+			mlx_mouse_show();
+			cub->mouse_grabbed = 0;
+		}
+		else
+		{
+			mlx_mouse_hide();
+			mlx_mouse_move(cub->mlxwin, 960, 540);
+			cub->mouse_grabbed = 1;
+		}
+	}
+	return (0);
+}
+
+int	destroy(void *param)
+{
+	t_cub	*cub;
+
+	cub = param;
+	mlx_destroy_image(cub->mlx, cub->image[0].img);
+	mlx_destroy_image(cub->mlx, cub->image[1].img);
+	mlx_destroy_image(cub->mlx, cub->image[2].img);
+	mlx_destroy_image(cub->mlx, cub->texture[0].img);
+	mlx_destroy_image(cub->mlx, cub->texture[1].img);
+	mlx_destroy_image(cub->mlx, cub->texture[2].img);
+	mlx_destroy_image(cub->mlx, cub->texture[3].img);
+	mlx_destroy_window(cub->mlx, cub->mlxwin);
+	free_parsed(cub->pars);
+	//sleep(60); //   sleep pour check leaks
+	exit (0);
 	return (0);
 }
 
@@ -116,6 +190,12 @@ int	main(int argc, char **argv)
 	ft_drawmap(&cub);
 	mlx_hook(cub.mlxwin, 2, 1L << 0, key_hook, &cub);
 	mlx_hook(cub.mlxwin, 3, 2L << 0, key_hook_release, &cub);
+
+	mlx_hook(cub.mlxwin, ON_DESTROY, 0L, destroy, &cub);
+	mlx_hook(cub.mlxwin, ON_MOTION_NOTIFY, 0L, mouse_motion, &cub);
+	//mlx_hook(cub.mlxwin, ON_BUTTON_PRESS, 0L, mouse_press, &cub);
+	mlx_hook(cub.mlxwin, ON_BUTTON_RELEASE, 0L, mouse_release, &cub);
+
 	mlx_loop_hook(cub.mlx, render_next_frame, &cub);
 	mlx_loop(cub.mlx);
 	free_parsed(cub.pars);

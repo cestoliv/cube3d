@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_loop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 17:35:03 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 18:28:07 by Romain           ###   ########.fr       */
+/*   Updated: 2022/09/15 15:49:37 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_keyvalidation(t_cub *cub)
 	}
 	if (cub->clavier[1] == 1)
 	{
-		cub->pos.pa += 0.05;
+		cub->pos.pa += 0.017;
 		if (cub->pos.pa > 2 * PI)
 			cub->pos.pa -= 2 * PI;
 		cub->pos.pdx = cos(cub->pos.pa) * 5;
@@ -52,7 +52,7 @@ void	ft_keyvalidation(t_cub *cub)
 	}
 	if (cub->clavier[3] == 1)
 	{
-		cub->pos.pa -= 0.05;
+		cub->pos.pa -= 0.017;
 		if (cub->pos.pa < 0)
 			cub->pos.pa += 2 * PI;
 		cub->pos.pdx = cos(cub->pos.pa) * 5;
@@ -76,19 +76,7 @@ int	key_hook_release(int keycode, t_cub *cub)
 int	key_hook(int keycode, t_cub *cub)
 {
 	if (keycode == 53)
-	{
-		mlx_destroy_image(cub->mlx, cub->image[0].img);
-		mlx_destroy_image(cub->mlx, cub->image[1].img);
-		mlx_destroy_image(cub->mlx, cub->image[2].img);
-		mlx_destroy_image(cub->mlx, cub->texture[0].img);
-		mlx_destroy_image(cub->mlx, cub->texture[1].img);
-		mlx_destroy_image(cub->mlx, cub->texture[2].img);
-		mlx_destroy_image(cub->mlx, cub->texture[3].img);
-		mlx_destroy_window(cub->mlx, cub->mlxwin);
-		free_parsed(cub->pars);
-		//sleep(60); //   sleep pour check leaks
-		exit (0);
-	}
+		destroy(cub);
 	if (keycode == 13)
 		cub->clavier[0] = 1;
 	if (keycode == 2)

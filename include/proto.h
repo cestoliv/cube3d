@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:23:13 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 18:20:51 by Romain           ###   ########.fr       */
+/*   Updated: 2022/09/15 15:53:29 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void		ft_drawmap(t_cub *cub);
 void		ft_draw_font(t_cub *cub);
 
 void		drawrays(t_cub *cub);
+
+int			destroy(void *param);
 
 void		ft_freetabb(u_int32_t**tab);
 //void		ft_bzero(void *s, size_t n);

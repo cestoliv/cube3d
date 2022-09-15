@@ -33,6 +33,7 @@ LST_SRCS	:=	parsing/check_map.c \
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	parsing.h \
 				cub3d.h \
+				keys.h \
 				proto.h
 
 SRCS		:=	$(addprefix $(DIR_SRCS)/, $(LST_SRCS))
