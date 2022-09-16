@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:19:04 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 17:18:16 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:32:22 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ char	*extract_texture(char *line, t_parsed *map)
 	if (texture)
 	{
 		if (*texture != NULL)
-		{
-			ft_printf("Error\n(You can't set a texture more than once)\n");
-			return (0);
-		}
+			return (
+				print_error("Error\n(You can't set a texture more than once)\n"));
 		*texture = get_line_value(2, line);
+		if (!*texture)
+			return (0);
 		fd = open(*texture, O_RDONLY);
 		if (fd < 0)
 			return (print_error("Error\n(Unable to open texture file)\n"));

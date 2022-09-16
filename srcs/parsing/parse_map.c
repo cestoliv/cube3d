@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:30:42 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/16 15:15:44 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:35:43 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ char	**alloc_map(char *map_line)
 				free(map[cur]);
 			return (free(map), NULL);
 		}
-		ft_memset(map[cur++], ' ', width);
-		map[cur][width] = 0;
+		ft_memset(map[cur], ' ', width);
+		map[cur++][width] = 0;
 	}
 	map[cur] = NULL;
 	return (map);

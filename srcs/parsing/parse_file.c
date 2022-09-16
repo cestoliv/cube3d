@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 18:35:09 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 18:35:26 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:24:20 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,14 @@ char	*get_map_content(int map_fd, char **line, t_parsed *parsed)
 			return (free_parsing_el(parsed, &map_line, line, map_fd));
 		}
 		else if (!is_map_content_line_correct(*line))
-		{
 			return (free_parsing_el(parsed, &map_line, line, map_fd));
-		}
 		else
+		{
 			map_line = ft_strappend(&map_line, *line);
+			if (!map_line)
+				return (free_parsed(parsed), free(*line),
+					free(get_next_line(map_fd, GNL_CLEAR)), NULL);
+		}
 		free(*line);
 		*line = get_next_line(map_fd, GNL_KEEP);
 	}

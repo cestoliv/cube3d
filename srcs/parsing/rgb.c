@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:19:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 17:28:35 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:29:11 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*decimal_to_hexadecimal(int decimal)
 	if (decimal < 0 || decimal > 255)
 		return (NULL);
 	hexadecimal = ft_calloc(3, sizeof(char));
+	if (!hexadecimal)
+		return (NULL);
 	ft_memset(hexadecimal, '0', 2);
 	cur = 1;
 	while (decimal > 0)
@@ -86,16 +88,15 @@ char	*rgb_to_hex(char *rgb)
 	while (rgbs[cur])
 	{
 		if (ft_atoi(rgbs[cur]) > 255 || ft_atoi(rgbs[cur]) < 0)
-		{
-			ft_printf("Error\n(Color value must be between 0 and 255)\n");
-			free_rgb(rgb, rgbs);
-			return (free(color), NULL);
-		}
-		temp_hex = decimal_to_hexadecimal(ft_atoi(rgbs[cur]));
+			return (free_rgb(rgb, rgbs), free(color),
+				print_error("Error\n(Color value must be between 0 and 255)\n"));
+		temp_hex = decimal_to_hexadecimal(ft_atoi(rgbs[cur++]));
+		if (!temp_hex)
+			return (free_rgb(rgb, rgbs), free(color), NULL);
 		color = ft_strappend(&color, temp_hex);
+		if (!color)
+			return (free_rgb(rgb, rgbs), free(temp_hex), NULL);
 		free(temp_hex);
-		cur++;
 	}
-	free_rgb(rgb, rgbs);
-	return (color);
+	return (free_rgb(rgb, rgbs), color);
 }
