@@ -1,10 +1,10 @@
-NO ./maps/assets/wall_1.xpm
-SO ./maps/assets/wall_2.xpm
-WE ./maps/assets/wall_3.xpm
-EA ./maps/assets/wall_4.xpm
+NO ./maps/assets/CONCRETE_2A.xpm
+SO ./maps/assets/VENT_1A.xpm
+WE ./maps/assets/TECH_1A.xpm
+EA ./maps/assets/TECH_3G.xpm
 
-F 196,98,16
-C 128,212,255
+F 20,22,25
+C 13,14,15
 
         1111111111111111111111111
         1000000000000000000000001
