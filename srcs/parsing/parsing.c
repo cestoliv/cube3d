@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 18:26:24 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 18:36:17 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 14:07:30 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 #include "parsing.h"
 
-void	init_parsed_struct(t_parsed **result)
+int	init_parsed_struct(t_parsed **result)
 {
 	*result = malloc(sizeof(t_parsed));
+	if (!(*result))
+		return (0);
 	(*result)->north_texture = NULL;
 	(*result)->south_texture = NULL;
 	(*result)->east_texture = NULL;
@@ -25,13 +27,18 @@ void	init_parsed_struct(t_parsed **result)
 	(*result)->floor_color = -1;
 	(*result)->ceil_color = -1;
 	(*result)->map2d = malloc(sizeof(t_map2D));
+	if (!((*result)->map2d))
+		return (free(*result), 0);
 	(*result)->map2d->map = NULL;
 	(*result)->map2d->width = 0;
 	(*result)->map2d->height = 0;
 	(*result)->map1d = malloc(sizeof(t_map1D));
+	if (!((*result)->map1d))
+		return (free((*result)->map2d), free(*result), 0);
 	(*result)->map1d->map = NULL;
 	(*result)->map1d->width = 0;
 	(*result)->map1d->height = 0;
+	return (1);
 }
 
 int	has_every_data(t_parsed *map)
@@ -63,7 +70,7 @@ int	check_map_line_char(char *line)
 	cur = 0;
 	while (line[cur] && line[cur] != '\n')
 	{
-		if (!ft_str_contains(" 10NSEW", line[cur]))
+		if (!ft_str_contains(" 10NSEWP", line[cur]))
 			return (0);
 		cur++;
 	}
@@ -87,11 +94,12 @@ void	create_map1d(t_parsed *map)
 		x = 0;
 		while (map->map2d->map[y][x])
 		{
-			if (ft_str_contains("0NSEW", map->map2d->map[y][x]))
-				map->map1d->map[cur] = 0;
+			if (map->map2d->map[y][x] == 'P')
+				map->map1d->map[cur++] = 2;
+			else if (ft_str_contains("0NSEW", map->map2d->map[y][x]))
+				map->map1d->map[cur++] = 0;
 			else
-				map->map1d->map[cur] = 1;
-			cur++;
+				map->map1d->map[cur++] = 1;
 			x++;
 		}
 		y++;
@@ -103,7 +111,8 @@ t_parsed	*parse(char *file_path)
 	t_parsed	*result;
 	char		*map_line;
 
-	init_parsed_struct(&result);
+	if (!init_parsed_struct(&result))
+		return (NULL);
 	map_line = parse_map_file(file_path, result);
 	if (!map_line)
 		return (0);

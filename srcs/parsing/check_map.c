@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:32:07 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 17:27:19 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 14:02:59 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	can_exit_map_from_pos(t_map2D *map2d, size_t x, size_t y)
 
 	if (map2d->map[y][x] == '.' || map2d->map[y][x] == '1')
 		return (0);
-	else if (map2d->map[y][x] == '0')
+	else if (map2d->map[y][x] == '0' || map2d->map[y][x] == 'P')
 		map2d->map[y][x] = '.';
 	else if (map2d->map[y][x] == ' ')
 		return (1);

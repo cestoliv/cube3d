@@ -47,7 +47,7 @@ test_map () {
 
 	if [ "$OUTPUT_MD5" != "$WANTED_MD5" ]; then
 		HAS_ERROR=1
-		OUTPUT=$(./cube3d $2)
+		OUTPUT=$(./cube3d -p $2)
 		echo -en "${RED}KO${END}"
 		echo -en " ${BOLD}Expected:${END} $3"
 		echo -e " ${BOLD}Got:${END} $OUTPUT"
@@ -77,6 +77,7 @@ test_map "Empty map content" "tests/maps/m17.ko.cub" "Error\n(The content of the
 test_map "Empty map content without every textures/colors" "tests/maps/m18.ko.cub" "Error\n(The map does not contain all the textures and colors information)"
 test_map "Empty file" "tests/maps/m19.ko.cub" "Error\n(The map does not contain all the textures and colors information)"
 test_map "Map without any player" "tests/maps/m20.ko.cub" "Error\n(Map doesn't contain a position for the player)"
+test_map "Map not closed because of a door" "tests/maps/m21.ko.cub" "Error\n(Map is not closed)"
 
 if [ $HAS_ERROR -eq 0 ]; then
 	echo -e "${GREEN}All tests passed!${END}"
