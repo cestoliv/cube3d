@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 18:26:24 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/16 14:07:30 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:16:20 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ t_parsed	*parse(char *file_path)
 	if (!map_line)
 		return (0);
 	result->map2d->map = parse_map_line(map_line);
+	if (!result->map2d->map)
+		return (free(map_line), free(result), NULL);
 	result->map2d->height = get_map_height(result->map2d->map);
 	result->map2d->width = get_map_width(result->map2d->map);
 	free(map_line);

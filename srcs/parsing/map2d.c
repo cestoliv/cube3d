@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:37:13 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 17:27:19 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:13:36 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,13 @@ t_map2D	*dup_map2d(t_map2D *map2d)
 	size_t	cur;
 
 	dup = malloc(sizeof(t_map2D));
+	if (!dup)
+		return (NULL);
 	dup->width = map2d->width;
 	dup->height = map2d->height;
 	dup->map = malloc(sizeof(char *) * (dup->height + 1));
+	if (!dup->map)
+		return (free(dup), NULL);
 	cur = 0;
 	while (cur < dup->height)
 	{

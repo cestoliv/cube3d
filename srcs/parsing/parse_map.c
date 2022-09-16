@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:30:42 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 17:22:14 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:15:44 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,20 @@ char	**alloc_map(char *map_line)
 	height = get_map_line_height(map_line);
 	width = get_map_line_width(map_line);
 	map = malloc(sizeof(char *) * (height + 1));
+	if (!map)
+		return (NULL);
 	cur = 0;
 	while (cur < height)
 	{
 		map[cur] = malloc(sizeof(char) * (width + 1));
-		ft_memset(map[cur], ' ', width);
+		if (!map[cur])
+		{
+			while (cur--)
+				free(map[cur]);
+			return (free(map), NULL);
+		}
+		ft_memset(map[cur++], ' ', width);
 		map[cur][width] = 0;
-		cur++;
 	}
 	map[cur] = NULL;
 	return (map);
@@ -85,6 +92,8 @@ char	**parse_map_line(char *map_line)
 	p_cur = 0;
 	y_cur = 0;
 	map = alloc_map(map_line);
+	if (!map)
+		return (NULL);
 	while (map_line[cur])
 	{
 		if (map_line[cur] == '\n')

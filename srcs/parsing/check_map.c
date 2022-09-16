@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:32:07 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/16 14:02:59 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:13:23 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int	check_map(t_parsed *map)
 		return (0);
 	}
 	map2d_dup = dup_map2d(map->map2d);
+	if (!map2d_dup)
+		return (0);
 	if (can_exit_map_from_pos(map2d_dup, player.x, player.y))
 	{
 		ft_printf("Error\n(Map is not closed)\n");
-		free_map2d(map2d_dup);
-		return (0);
+		return (free_map2d(map2d_dup), 0);
 	}
-	free_map2d(map2d_dup);
-	return (1);
+	return (free_map2d(map2d_dup), 1);
 }
