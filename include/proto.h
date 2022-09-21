@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:23:13 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/15 15:53:29 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/20 19:24:16 by rcuminal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,24 @@ void		ft_draw_font(t_cub *cub);
 
 void		drawrays(t_cub *cub);
 
-int			destroy(void *param);
-
-void		ft_freetabb(u_int32_t**tab);
-//void		ft_bzero(void *s, size_t n);
 u_int32_t	**ft_mem2array(uint32_t *mem, size_t len_x, size_t len_y);
-void		init_imagespartone(t_cub *cub);
-void		init_imagesparttwo(t_cub *cub);
+void		init_imagespartone(t_cub *cub, int *i);
 
 void		ft_keyvalidation(t_cub *cub);
 int			key_hook_release(int keycode, t_cub *cub);
 int			key_hook(int keycode, t_cub *cub);
 int			render_next_frame(t_cub *cub);
-
 void		ft_hori(t_cub *cub);
 void		ft_hori_try_contact(t_cub *cub);
 void		ft_verti(t_cub *cub);
 void		ft_verti_try_contact(t_cub *cub);
 void		ft_shorter(t_cub *cub);
+void		playerdir(t_cub *cub);
+void		ft_setmovevalue(t_cub *cub);
+void		ft_doormanager(t_cub *cub);
+int			parse_only(t_parsed *pars);
+int			mouse_motion(int x, int y, t_cub *cub);
+int			mouse_release(int key, int x, int y, void *param);
+int			destroy(void *param);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 22:12:22 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 18:25:06 by Romain           ###   ########.fr       */
+/*   Updated: 2022/09/20 19:33:46 by rcuminal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,38 +31,16 @@ void	ft_drawwalls(t_cub *cub, int beginx, int beginy, int lineH)
 		while (y < beginy + lineH && y < 1080)
 		{
 			tmp_x = ((double)((double)(cub->data.ratiox / 32)) \
-				*cub->texture[cub->data.dir].Widt);
+				*cub->texture[cub->data.dir].widt);
 			tmp_y = (((double)1 + ((double)(y - beginy - lineH) / \
 					(double)(2 * lineH))) * \
-						cub->texture[cub->data.dir].Heig);
+						cub->texture[cub->data.dir].heig);
 			cub->image[0].arr[y++][x] = \
 					cub->texture[cub->data.dir].arr[tmp_y][tmp_x];
 		}
 		x++;
 	}
 }
-
-// void	ft_putplayer(uint32_t **img_color, t_pos *pos)
-// {
-// 	int	x;
-// 	int	y;
-
-// 	x = 0;
-// 	y = 0;
-// 	while (y < 1080)
-// 	{
-// 		x = 0;
-// 		while (x < 1920)
-// 		{
-// 			if (y >= pos->y / 2 - 2 && y <= pos->y / 2 + 2 && x \
-// 					>= pos->x / 2 - 2 && x <= pos->x / 2 + 2)
-// 				img_color[y][x++] = 0xff0000;
-// 			else
-// 				x++;
-// 		}
-// 		++y;
-// 	}
-// }
 
 void	ft_drawsquare(uint32_t **img_color, int posx, int posy, int scale)
 {
@@ -93,14 +71,14 @@ void	ft_drawmap(t_cub *cub)
 	x = 0;
 	y = 0;
 	y = 0;
-	while (y < cub->mapH)
+	while (y < cub->maph)
 	{
 		x = 0;
-		while (x < cub->mapW)
+		while (x < cub->mapw)
 		{
-			cub->data.xo = x * cub->mapScale / cub->resizemap;
-			cub->data.yo = y * cub->mapScale / cub->resizemap;
-			if (cub->map[y * cub->mapW + x] == 1)
+			cub->data.xo = x * cub->mapscale / cub->resizemap;
+			cub->data.yo = y * cub->mapscale / cub->resizemap;
+			if (cub->map[y * cub->mapw + x] == 1)
 				ft_drawsquare(cub->image[1].arr, cub->data.xo, \
 						cub->data.yo, 64 / cub->resizemap);
 			x++;
@@ -128,4 +106,16 @@ void	ft_draw_font(t_cub *cub)
 		}
 		++y;
 	}
+}
+
+void	playerdir(t_cub *cub)
+{
+	if (cub->pars->player.dir == 'E')
+		cub->pos.pa = 0;
+	if (cub->pars->player.dir == 'W')
+		cub->pos.pa = PI;
+	if (cub->pars->player.dir == 'N')
+		cub->pos.pa = -PI / 2;
+	if (cub->pars->player.dir == 'S')
+		cub->pos.pa = PI / 2;
 }

@@ -1,4 +1,3 @@
 .objs
-cube3d
-tests/tests
+cub3d
 *.dSYM

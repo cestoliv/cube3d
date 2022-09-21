@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycastingutils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:17:48 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/13 14:59:16 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:01:28 by rcuminal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	ft_final_maths(t_cub *cub)
 		cub->data.ca += 2 * PI;
 	if (cub->data.ca > 2 * PI)
 		cub->data.ca -= 2 * PI;
-	cub->data.disT = cub->data.disT * cos(cub->data.ca) / 2;
-	cub->data.lineH = (cub->mapScale * 340) / cub->data.disT;
-	cub->data.lineO = 540;
+	cub->data.dist = cub->data.dist * cos(cub->data.ca) / 2;
+	cub->data.lineh = (cub->mapscale * 340) / cub->data.dist;
+	cub->data.lineo = 540;
 	if (cub->data.shade == 1)
 	{
-		cub->data.ratiox = (int)(cub->data.rayX / 2.0) % 32;
+		cub->data.ratiox = (int)(cub->data.rayx / 2.0) % 32;
 		if (cub->data.ra > 180)
 			cub->data.ratiox = 31 - cub->data.ratiox;
 	}
 	else
 	{
-		cub->data.ratiox = (int)(cub->data.rayY / 2.0) % 32;
+		cub->data.ratiox = (int)(cub->data.rayy / 2.0) % 32;
 		if (cub->data.ra > 90 && cub->data.ra < 270)
 			cub->data.ratiox = 31 - cub->data.ratiox;
 	}
@@ -40,19 +40,19 @@ void	ft_final_maths(t_cub *cub)
 void	reset_raycasting_varshori(t_cub *cub)
 {
 	cub->data.dow = 0;
-	cub->data.disH = 1000000;
+	cub->data.dish = 1000000;
 	cub->data.horix = cub->pos.x;
 	cub->data.horiy = cub->pos.y;
-	cub->data.aTan = -1 / tan(cub->data.ra);
+	cub->data.atan = -1 / tan(cub->data.ra);
 }
 
 void	reset_raycasting_varsverti(t_cub *cub)
 {
 	cub->data.dow = 0;
-	cub->data.disV = 1000000;
+	cub->data.disv = 1000000;
 	cub->data.vertx = cub->pos.x;
 	cub->data.verty = cub->pos.y;
-	cub->data.nTan = -tan(cub->data.ra);
+	cub->data.ntan = -tan(cub->data.ra);
 }
 
 void	fix_angle(t_cub *cub)

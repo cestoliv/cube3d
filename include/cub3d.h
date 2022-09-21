@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:27:38 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/15 15:41:53 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:40:05 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define CUB3D_H
 
 # include "../libmlx/mlx.h"
+# include "../libmlx/improved_mlx.h"
 # include "../libft/include/libft.h"
-#include "parsing.h"
-#include "keys.h"
+# include "parsing.h"
+# include "keys.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
@@ -25,16 +26,14 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# define PI 3.1415926535
-# define PI2 PI / 2
-# define PI3 3 * PI / 2
+# define PI 	3.1415926535
+# define DR 	0.0174533
 
-# define DR 0.0174533
-
-# define N	0
-# define S	1
-# define E	2
-# define O	3
+# define N		0
+# define S		1
+# define E		2
+# define O		3
+# define DOOR	4
 
 typedef struct s_pos
 {
@@ -43,6 +42,21 @@ typedef struct s_pos
 	float		pdx;
 	float		pdy;	
 	float		pa;
+
+	int			ipx;
+	int			ipx_add_xo;
+	int			ipx_sub_xo;
+	int			ipy;
+	int			ipy_add_yo;
+	int			ipy_sub_yo;
+	int			ipx_add_px;
+	int			ipx_sub_px;
+	int			ipy_add_py;
+	int			ipy_sub_py;
+	float		px;
+	float		py;
+	int			xo;
+	int			yo;
 }					t_pos;
 
 typedef struct s_raycasting
@@ -53,19 +67,19 @@ typedef struct s_raycasting
 
 	int			focal;
 
-	float		disV;
-	float		disH;
-	float		disT;
+	float		disv;
+	float		dish;
+	float		dist;
 
-	float		lineH;
-	float		lineO;
+	float		lineh;
+	float		lineo;
 
-	float		aTan;
-	float		nTan;
+	float		atan;
+	float		ntan;
 
 	float		ra;
-	float		rayX;
-	float		rayY;
+	float		rayx;
+	float		rayy;
 	float		vertx;
 	float		verty;
 	float		horix;
@@ -93,8 +107,8 @@ typedef struct s_image
 	int			line_length;
 	int			endian;
 
-	int			Widt;
-	int			Heig;
+	int			widt;
+	int			heig;
 }					t_image;
 
 typedef struct cub
@@ -104,20 +118,22 @@ typedef struct cub
 
 	int				*map;
 
-	int				mapW;
-	int				mapH;
-	int				mapScale;
+	int				mapw;
+	int				maph;
+	int				mapscale;
 	int				max;
 	int				resizemap;
 
+	int				checkimg;
+
 	int				mouse_grabbed;
 
-	char			clavier[6];
+	char			clavier[7];
 
 	t_raycasting	data;
 	t_pos			pos;
 	t_image			image[3];
-	t_image			texture[4];
+	t_image			texture[5];
 	t_parsed		*pars;
 }					t_cub;
 

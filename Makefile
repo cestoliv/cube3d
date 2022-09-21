@@ -1,4 +1,4 @@
-NAME		:=	cube3d
+NAME		:=	cub3d
 
 CC			:=	clang
 ifdef LDFLAGS
@@ -30,7 +30,9 @@ LST_SRCS	:=	parsing/check_map.c \
 				display/math.c \
 				display/raycastinghv.c \
 				display/raycastingutils.c \
-				display/utils.c
+				display/utils.c \
+				display/mousendestroy.c \
+				
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	parsing.h \
 				cub3d.h \
