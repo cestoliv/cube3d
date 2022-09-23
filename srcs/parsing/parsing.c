@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 18:26:24 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/16 15:16:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/23 13:01:56 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_map_line_char(char *line)
 	return (1);
 }
 
-void	create_map1d(t_parsed *map)
+int_least32_t	create_map1d(t_parsed *map)
 {
 	int	x;
 	int	y;
@@ -87,23 +87,23 @@ void	create_map1d(t_parsed *map)
 	map->map1d->height = map->map2d->height;
 	map->map1d->map = malloc(sizeof(int)
 			* (map->map1d->width * map->map1d->height));
-	y = 0;
-	cur = 0;
-	while (map->map2d->map[y])
+	if (!map->map1d->map)
+		return (0);
+	y = -1;
+	cur = -1;
+	while (map->map2d->map[++y])
 	{
-		x = 0;
-		while (map->map2d->map[y][x])
+		x = -1;
+		while (map->map2d->map[y][++x])
 		{
+			map->map1d->map[++cur] = 1;
 			if (map->map2d->map[y][x] == 'P')
-				map->map1d->map[cur++] = 2;
+				map->map1d->map[cur] = 2;
 			else if (ft_str_contains("0NSEW", map->map2d->map[y][x]))
-				map->map1d->map[cur++] = 0;
-			else
-				map->map1d->map[cur++] = 1;
-			x++;
+				map->map1d->map[cur] = 0;
 		}
-		y++;
 	}
+	return (1);
 }
 
 t_parsed	*parse(char *file_path)
@@ -124,7 +124,8 @@ t_parsed	*parse(char *file_path)
 	free(map_line);
 	if (!check_map(result))
 		return (free_parsed(result));
-	create_map1d(result);
+	if (!create_map1d(result))
+		return (free_parsed(result));
 	get_player(result->map2d->map, &(result->player));
 	return (result);
 }
