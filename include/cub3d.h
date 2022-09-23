@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:27:38 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/21 15:40:05 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:21:07 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct cub
 	int				checkimg;
 
 	int				mouse_grabbed;
+	int				display_map;
 
 	char			clavier[7];
 

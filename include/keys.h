@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:38:26 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 15:39:11 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:34:17 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 
 # define MOUSE_LEFT			1
 # define MOUSE_RIGHT		2
+# define KEY_ESC			53
+# define KEY_LEFT			123
+# define KEY_RIGHT			124
+# define KEY_Z				13
+# define KEY_S				1
+# define KEY_Q				0
+# define KEY_D				2
+# define KEY_M				41
+# define KEY_P				35
 
 # define ON_DESTROY			17
 # define ON_BUTTON_PRESS	4

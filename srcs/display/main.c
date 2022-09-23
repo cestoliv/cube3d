@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 01:14:36 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/20 19:44:23 by rcuminal         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:44:25 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	drawrays(t_cub *cub)
 		ft_verti_try_contact(cub);
 		cub->data.shade = 1;
 		ft_shorter(cub);
-		ft_draw_line(cub, cub->pos, cub->data.rayx / cub->resizemap, \
-			cub->data.rayy / cub->resizemap);
+		if (cub->display_map)
+			ft_draw_line(cub, cub->pos, cub->data.rayx / cub->resizemap, \
+				cub->data.rayy / cub->resizemap);
 		cub->data.ratiox = (int)(cub->data.rayx / 2) % 32;
 		ft_final_maths(cub);
 		ft_drawwalls(cub, cub->data.focal * 4, \
@@ -52,6 +53,7 @@ void	ft_recup(t_cub *cub)
 	cub->pos.x = 64 * ((double)cub->pars->player.x + 0.5);
 	cub->pos.y = 64 * ((double)cub->pars->player.y - 0.5);
 	cub->mouse_grabbed = 0;
+	cub->display_map = 0;
 	cub->mapscale = 64;
 }
 

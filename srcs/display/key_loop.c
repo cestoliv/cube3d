@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_loop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 17:35:03 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/19 23:13:04 by rcuminal         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:35:12 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,38 +84,40 @@ void	ft_keyvalidation(t_cub *cub)
 
 int	key_hook_release(int keycode, t_cub *cub)
 {
-	if (keycode == 13)
+	if (keycode == KEY_Z)
 		cub->clavier[0] = 0;
-	if (keycode == 2)
+	else if (keycode == KEY_D)
 		cub->clavier[5] = 0;
-	if (keycode == 1)
+	else if (keycode == KEY_S)
 		cub->clavier[2] = 0;
-	if (keycode == 0)
+	else if (keycode == KEY_Q)
 		cub->clavier[4] = 0;
-	if (keycode == 123)
+	else if (keycode == KEY_LEFT)
 		cub->clavier[3] = 0;
-	if (keycode == 124)
+	else if (keycode == KEY_RIGHT)
 		cub->clavier[1] = 0;
+	else if (keycode == KEY_M)
+		cub->display_map = !cub->display_map;
 	return (0);
 }
 
 int	key_hook(int keycode, t_cub *cub)
 {
-	if (keycode == 53)
+	if (keycode == KEY_ESC)
 		destroy(cub);
-	if (keycode == 13)
+	if (keycode == KEY_Z)
 		cub->clavier[0] = 1;
-	if (keycode == 2)
+	if (keycode == KEY_D)
 		cub->clavier[5] = 1;
-	if (keycode == 1)
+	if (keycode == KEY_S)
 		cub->clavier[2] = 1;
-	if (keycode == 0)
+	if (keycode == KEY_Q)
 		cub->clavier[4] = 1;
-	if (keycode == 123)
+	if (keycode == KEY_LEFT)
 		cub->clavier[3] = 1;
-	if (keycode == 124)
+	if (keycode == KEY_RIGHT)
 		cub->clavier[1] = 1;
-	if (keycode == 3)
+	if (keycode == KEY_P)
 		cub->clavier[6] = 1;
 	return (0);
 }

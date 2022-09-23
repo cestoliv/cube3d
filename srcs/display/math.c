@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:20:23 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/20 19:23:55 by rcuminal         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:40:45 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ int	render_next_frame(t_cub *cub)
 	drawrays(cub);
 	mlx_put_image_to_window(cub->mlx, cub->mlxwin, cub->image[2].img, 0, 0);
 	mlx_put_image_to_window(cub->mlx, cub->mlxwin, cub->image[0].img, 0, 0);
-	mlx_put_image_to_window(cub->mlx, cub->mlxwin, cub->image[1].img, 0, 0);
+	if (cub->display_map)
+		mlx_put_image_to_window(cub->mlx, cub->mlxwin, cub->image[1].img, 0, 0);
 	while (y < 1080)
 	{
 		x = 0;
