@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 18:35:09 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/16 15:24:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/23 13:07:19 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,19 @@ int	extract_map_values(int map_fd, char **line, t_parsed *parsed)
 	return (1);
 }
 
+int	check_map_extension(char *file_path)
+{
+	int		len;
+
+	len = ft_strlen(file_path);
+	if (len < 4)
+		return (0);
+	else if (ft_strncmp(&file_path[len - 4], ".cub", 4))
+		return (0);
+	else
+		return (1);
+}
+
 char	*parse_map_file(char *file_path, t_parsed *parsed)
 {
 	int			map_fd;
@@ -96,6 +109,9 @@ char	*parse_map_file(char *file_path, t_parsed *parsed)
 	if (map_fd < 0)
 		return (free_parsed(parsed),
 			print_error("Error\n(Unable to open the map file)\n"));
+	if (!check_map_extension(file_path))
+		return (free_parsed(parsed),
+			print_error("Error\n(The map file extension is not .cub)\n"));
 	line = get_next_line(map_fd, GNL_KEEP);
 	if (!extract_map_values(map_fd, &line, parsed))
 		return (NULL);
