@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:38:26 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/23 14:34:17 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:13:59 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define KEY_S				1
 # define KEY_Q				0
 # define KEY_D				2
-# define KEY_M				41
+# define KEY_M				46
 # define KEY_P				35
 
 # define ON_DESTROY			17
