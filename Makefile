@@ -32,6 +32,7 @@ LST_SRCS	:=	parsing/check_map.c \
 				display/raycastingutils.c \
 				display/utils.c \
 				display/mousendestroy.c \
+				display/utils_init.c \
 				
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	parsing.h \

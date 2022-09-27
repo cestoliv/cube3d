@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycastinghv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 18:57:56 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/21 15:39:55 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:52:52 by rcuminal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	ft_hori(t_cub *cub)
 {
 	{
-		cub->data.rayy = (((int)cub->pos.y >> 6) << 6) - 0.0001;
+		cub->data.rayy = (((int)cub->pos.y >> 6) << 6) - 0.001;
 		cub->data.rayx = (cub->pos.y - cub->data.rayy) \
 			* cub->data.atan + cub->pos.x;
 		cub->data.yo = -64;
@@ -72,7 +72,7 @@ void	ft_verti(t_cub *cub)
 {
 	if (cub->data.ra > (PI / 2) && cub->data.ra < (3 * PI / 2))
 	{
-		cub->data.rayx = (((int)cub->pos.x >> 6) << 6) - 0.0001;
+		cub->data.rayx = (((int)cub->pos.x >> 6) << 6) - 0.001;
 		cub->data.rayy = (cub->pos.x - cub->data.rayx) \
 			* cub->data.ntan + cub->pos.y;
 		cub->data.xo = -64;
@@ -138,7 +138,7 @@ void	ft_shorter(t_cub *cub)
 		cub->data.rayy = cub->data.horiy;
 		cub->data.dist = cub->data.dish;
 	}
-	if (cub->data.disv < cub->data.dish)
+	if (cub->data.disv <= cub->data.dish)
 	{
 		if (cub->data.tmpdir2 == E)
 			cub->data.dir = E;

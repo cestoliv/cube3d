@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycastingutils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Romain <Romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:17:48 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/19 22:01:28 by rcuminal         ###   ########.fr       */
+/*   Updated: 2022/09/25 22:02:40 by Romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	reset_raycasting_varshori(t_cub *cub)
 {
 	cub->data.dow = 0;
 	cub->data.dish = 1000000;
-	cub->data.horix = cub->pos.x;
+	cub->data.horix = cub->pos.x + 32;
 	cub->data.horiy = cub->pos.y;
 	cub->data.atan = -1 / tan(cub->data.ra);
 }
@@ -50,7 +50,7 @@ void	reset_raycasting_varsverti(t_cub *cub)
 {
 	cub->data.dow = 0;
 	cub->data.disv = 1000000;
-	cub->data.vertx = cub->pos.x;
+	cub->data.vertx = cub->pos.x + 32;
 	cub->data.verty = cub->pos.y;
 	cub->data.ntan = -tan(cub->data.ra);
 }

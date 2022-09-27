@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:20:23 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/23 14:40:45 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:40:48 by rcuminal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,49 +50,52 @@ void	ft_draw_line(t_cub *cub, t_pos pos, int endx, int endy)
 	return ;
 }
 
-void	ft_setmovevalue(t_cub *cub)
+void	ft_doormanagernorm(t_cub *cub)
 {
-	cub->pos.xo = 0;
-	cub->pos.yo = 0;
-	if (cub->pos.pdx < 0)
-		cub->pos.xo -= 20;
-	else
-		cub->pos.xo = 20;
-	if (cub->pos.pdy < 0)
-		cub->pos.yo -= 20;
-	else
-		cub->pos.yo = 20;
-	cub->pos.ipx = cub->pos.x / 64.0;
-	cub->pos.ipx_add_xo = (cub->pos.x + cub->pos.xo) / 64.0;
-	cub->pos.ipx_sub_xo = (cub->pos.x - cub->pos.xo) / 64.0;
-	cub->pos.ipy = cub->pos.y / 64.0;
-	cub->pos.ipy_add_yo = (cub->pos.y + cub->pos.yo) / 64.0;
-	cub->pos.ipy_sub_yo = (cub->pos.y - cub->pos.yo) / 64.0;
-	cub->pos.px = cos(cub->pos.pa + PI / 2) * 5;
-	cub->pos.py = sin(cub->pos.pa + PI / 2) * 5;
-	cub->pos.ipx_add_px = (cub->pos.x + cub->pos.px) / 64.0;
-	cub->pos.ipx_sub_px = (cub->pos.x - cub->pos.px) / 64.0;
-	cub->pos.ipy_add_py = (cub->pos.y + cub->pos.py) / 64.0;
-	cub->pos.ipy_sub_py = (cub->pos.y - cub->pos.py) / 64.0;
+	if ((cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 3 && \
+	(cub->map[cub->posy * cub->mapw + cub->posx] == 0 || cub->map[cub->posy \
+	* cub->mapw + cub->posx] == 3)) || (cub->map[cub->pos.ipy_add_yo * \
+	cub->mapw + cub->pos.ipx] == 3 && (cub->map[cub->posy * cub->mapw + \
+	cub->posx] == 0 || cub->map[cub->posy * cub->mapw + cub->posx] == 3)))
+	{
+		if (cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 3 \
+		&& cub->posy * cub->mapw + cub->posx != (int)(cub->pos.ipy * \
+		cub->mapw + cub->pos.ipx_add_xo))
+			cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] = 2;
+		if (cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] == 3 \
+		&& cub->posy * cub->mapw + cub->posx != (int)(cub->pos.ipy_add_yo * \
+		cub->mapw + cub->pos.ipx))
+			cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] = 2;
+	}
 }
 
 void	ft_doormanager(t_cub *cub)
 {
-	if (cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 2)
+	cub->posx = (int)(cub->pos.x / 64.0);
+	cub->posy = (int)(cub->pos.y / 64.0);
+	if (cub->posy * cub->mapw + cub->posx != (cub->pos.ipy * cub->mapw + \
+	cub->pos.ipx_add_xo) || cub->posy * cub->mapw + cub->posx != \
+	(cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx))
 	{
-		if (cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 2)
-			cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] = 3;
-		if (cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] == 2)
-			cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] = 3;
+		if ((cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 2 && \
+		(cub->map[cub->posy * cub->mapw + cub->posx] == 0 || cub->map[cub->posy \
+		* cub->mapw + cub->posx] == 3)) || (cub->map[cub->pos.ipy_add_yo * \
+		cub->mapw + cub->pos.ipx] == 2 && (cub->map[cub->posy * cub->mapw \
+		+ cub->posx] == 0 || cub->map[cub->posy * cub->mapw + cub->posx] == 3)))
+		{
+			if (cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 2 \
+			&& cub->posy * cub->mapw + cub->posx != (cub->pos.ipy * cub->mapw + \
+			cub->pos.ipx_add_xo))
+				cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] = 3;
+			if (cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] == 2 \
+			&& cub->posy * cub->mapw + cub->posx != (int)(cub->pos.ipy_add_yo \
+			* cub->mapw + cub->pos.ipx))
+				cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] = 3;
+		}
+		else
+			ft_doormanagernorm(cub);
 	}
-	else if (cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 3)
-	{
-		if (cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] == 3)
-			cub->map[cub->pos.ipy * cub->mapw + cub->pos.ipx_add_xo] = 2;
-		if (cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] == 3)
-			cub->map[cub->pos.ipy_add_yo * cub->mapw + cub->pos.ipx] = 2;
-	}
-	cub->clavier[6] = 0;
+		cub->clavier[6] = 0;
 }
 
 int	render_next_frame(t_cub *cub)

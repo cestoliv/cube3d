@@ -6,7 +6,7 @@
 /*   By: rcuminal <rcuminal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:23:13 by rcuminal          #+#    #+#             */
-/*   Updated: 2022/09/20 19:24:16 by rcuminal         ###   ########.fr       */
+/*   Updated: 2022/09/27 15:23:19 by rcuminal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ int			parse_only(t_parsed *pars);
 int			mouse_motion(int x, int y, t_cub *cub);
 int			mouse_release(int key, int x, int y, void *param);
 int			destroy(void *param);
+int			ft_errorimg_norm(t_cub *cub, int i, mlx_ptr_t *new_mlx);
+int			ft_errorimg(t_cub *cub, int i);
 
 #endif
