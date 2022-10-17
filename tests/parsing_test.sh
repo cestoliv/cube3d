@@ -79,6 +79,7 @@ test_map "Empty file" "tests/maps/m19.ko.cub" "Error\n(The map does not contain 
 test_map "Map without any player" "tests/maps/m20.ko.cub" "Error\n(Map doesn't contain a position for the player)"
 test_map "Map not closed because of a door" "tests/maps/m21.ko.cub" "Error\n(Map is not closed)"
 test_map "Map without proper extension" "tests/maps/m22.ko.cubb" "Error\n(The map file extension is not .cub)"
+test_map "Map with a line of only one character" "tests/maps/m23.ok.cub" "MAP OK."
 
 if [ $HAS_ERROR -eq 0 ]; then
 	echo -e "${GREEN}All tests passed!${END}"

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:14:35 by ocartier          #+#    #+#             */
-/*   Updated: 2022/09/15 17:22:51 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:14:21 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	ft_is_only(char *line, char c)
 	size_t	cur;
 
 	cur = 0;
-	while (line[cur] && line[cur + 1] != '\n')
+	while (line[cur])
 	{
-		if (line[cur] != c)
+		if (line[cur] != c && line[cur] != '\n')
 			return (0);
 		cur++;
 	}
